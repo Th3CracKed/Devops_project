@@ -1,11 +1,11 @@
 language: java
 
 install:
-  - ./gradlew assemble
-
+  - gradle assemble
 
 script:
-  - ./gradlew check
+  - gradle check
+  - gradle javadoc
 
 jdk:
   - oraclejdk8
