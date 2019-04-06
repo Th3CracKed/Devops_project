@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Permet à DataFrame de définir une liste de colonnes avec different type
+ * L'accès à cette class est dans le package seulement
  * @param <E> le type de cette colonne définit par l'utilisateur
  */
 class Column<E> {
