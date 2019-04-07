@@ -19,21 +19,30 @@ import java.util.List;
  */
 
 public class CsvParser {
-    private static String[] mIndexs; //= new String[]{"1", "2", "3"};
-    private static String[] mLabels; // = new String[]{"A", "B", "C"};
+    /**
+     * Liste d'identifiant de lignes
+     */
+    private static ArrayList<String> indexes = new ArrayList<>();
+
+    /**
+     * Liste d'identifiant de colonnes
+     */
+    private static ArrayList<String> labels = new ArrayList<>();
 
     public static DataFrame parse(String filename) throws IOException {
-        List<List<String>> records = new ArrayList<>();
+        ArrayList<ArrayList<String>> records = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(";");
-                records.add(Arrays.asList(values));
+                ArrayList<String> values = new ArrayList<>(Arrays.asList(line.split(",")));
+                records.add(values);
             }
         }
         System.out.println(records);
 
-        mLabels= records.get(0).toArray(new String[0]);
+        labels= records.get(0);
+        labels.remove(0);
+
         DataFrame res = null;
         //DataFrame res = new DataFrame(mIndexs, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","6"));
         return res;
