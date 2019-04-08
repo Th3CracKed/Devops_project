@@ -1,8 +1,6 @@
 package utils;
 
-import data_structure.DataFrame;
 
-import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,17 +17,12 @@ import java.util.List;
  */
 
 public class CsvParser {
-    /**
-     * Liste d'identifiant de lignes
-     */
-    private static ArrayList<String> indexes = new ArrayList<>();
 
-    /**
-     * Liste d'identifiant de colonnes
-     */
-    private static ArrayList<String> labels = new ArrayList<>();
+    private ArrayList<String> indexes = new ArrayList<>();
+    private ArrayList<String> labels = new ArrayList<>();
+    private boolean containsIndex = false;
 
-    public static DataFrame parse(String filename) throws IOException {
+    public CsvParser(String filename) throws IOException {
         ArrayList<ArrayList<String>> records = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -41,10 +34,21 @@ public class CsvParser {
         System.out.println(records);
 
         labels= records.get(0);
-        labels.remove(0);
+        if(labels.get(0).equals("Index")){
+            labels.remove(0);
+            containsIndex= true;
+        }
 
-        DataFrame res = null;
+
+        //DataFrame res = null;
         //DataFrame res = new DataFrame(mIndexs, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","6"));
-        return res;
+    }
+
+    public ArrayList<String> getLabels(){
+        return labels;
+    }
+
+    public ArrayList<String> getIndexes(){
+        return indexes;
     }
 }
