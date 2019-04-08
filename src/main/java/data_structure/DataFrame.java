@@ -167,6 +167,7 @@ public class DataFrame{
      * @param selected_Indexes les lignes à retourner
      * @return un DataFrame des celulles des lignes passer en paramètre
      * @throws IndexOutOfBoundsException si l'une des indices passer en paramètre est en dehors du rang
+     * @throws IllegalArgumentException si aucun paramètre n'est passer
      */
     public DataFrame iloc(int... selected_Indexes){
         if(selected_Indexes.length==0)
@@ -187,6 +188,40 @@ public class DataFrame{
                 columnIndex++;
             }
 
+        }
+
+        return new DataFrame(mIndexes.toArray(new String[0]),labels.toArray(new String[0]), columnsCells);
+    }
+
+    /**
+     * Cree un nouveau DataFrame en selectionnant les labels passer en paramètre
+     * si un label n'est pas trouvé retourne des colonnes avec la valeur 'NaN'
+     * @param selected_Labels les colonnes à retourner
+     * @return un DataFrame à partir des colonnes passer en paramètre
+     * @throws IllegalArgumentException si aucun paramètre n'est passer
+     */
+    public DataFrame loc(String... selected_Labels){
+        if(selected_Labels.length==0)
+            throw new IllegalArgumentException("Il faut passer au moins un paramètre");
+
+        List <String> mIndexes = new ArrayList<>();
+        List[] columnsCells = new List[labels.size()];
+
+        for(String label : selected_Labels){
+            mIndexes.add(label);
+            int index = indexes.indexOf(label);
+            int columnIndex = 0;
+            for(Column column : columns) {
+                if(columnsCells[columnIndex]==null){
+                    columnsCells[columnIndex] = new ArrayList();
+                }
+                if(index!=-1) {
+                    columnsCells[columnIndex].add(column.getCells().get(index));
+                }else{
+                    columnsCells[columnIndex].add("NaN");//label not found
+                }
+                columnIndex++;
+            }
         }
 
         return new DataFrame(mIndexes.toArray(new String[0]),labels.toArray(new String[0]), columnsCells);
