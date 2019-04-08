@@ -13,11 +13,11 @@ import static org.junit.Assert.assertNotEquals;
 
 public class DataFrameTest {
 
-    private String[] mIndexs = new String[]{"1", "2", "3"};
+    private String[] mIndexes = new String[]{"1", "2", "3"};
 
     private String[] mLabels = new String[]{"A", "B", "C"};
 
-    private DataFrame dataFrame = new DataFrame(mIndexs, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
+    private DataFrame dataFrame = new DataFrame(mIndexes, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
 
     @Test
     public void testContructor1(){
@@ -26,7 +26,7 @@ public class DataFrameTest {
 
     @Test
     public void testIndexs(){
-        assertEquals("Les Indices passer en paramètre ne sont pas les mêmes dans le DataFrame",dataFrame.getIndexes(),Arrays.asList(mIndexs));
+        assertEquals("Les Indices passer en paramètre ne sont pas les mêmes dans le DataFrame",dataFrame.getIndexes(),Arrays.asList(mIndexes));
     }
 
     @Test
@@ -50,13 +50,13 @@ public class DataFrameTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void test_Illegal_Argument_Index_Contructor1(){
-        DataFrame dataFrameIndex = new DataFrame(mIndexs, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","6"));
+        DataFrame dataFrameIndex = new DataFrame(mIndexes, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","6"));
         assertNotEquals(null,dataFrameIndex);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void test_Illegal_Argument_Label_Contructor1(){
-        DataFrame dataFrameLabel = new DataFrame(mIndexs, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6));
+        DataFrame dataFrameLabel = new DataFrame(mIndexes, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6));
         assertNotEquals(null,dataFrameLabel);
     }
 
@@ -128,6 +128,39 @@ public class DataFrameTest {
         int max = (int) m.invoke(dataFrame,6,Arrays.asList("","465","9498","88888888"));
         assertEquals(8,max);
         m.setAccessible(false);
+    }
+
+    @Test
+    public void test_iloc(){
+        DataFrame df1 = new DataFrame(new String[]{"1", "3"}, mLabels, Arrays.asList("Test1","test3"),Arrays.asList(2,6),Arrays.asList("2","6"));
+        DataFrame df2 = dataFrame.iloc(0,2);
+        assertEquals("DataFrame est cense etre egale puisqu'ils sont composer du même contenu",df1,df2);
+    }
+
+    @Test
+    public void test_iloc_failed(){
+        DataFrame df2 = dataFrame.iloc(0,2);
+        assertNotEquals("DataFrame n'est pas cense etre egale puisqu'ils ne sont pas composer du même contenu",dataFrame,df2);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void test_Index_Out_iloc(){
+        DataFrame df2 = dataFrame.iloc(3);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test__Illegal_Argument_iloc(){
+        dataFrame.iloc();
+    }
+
+    @Test
+    public void equals(){
+        DataFrame df1 = new DataFrame(new String[]{"1", "2", "3"}, new String[]{"A", "B", "C"}, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
+        DataFrame df2 = new DataFrame(new String[]{"1", "2", "3"}, new String[]{"A", "B", "C"}, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
+        assertEquals(df1,df1);
+        assertNotEquals("DataFrame ne doit pas equals a un object",df1, new Object());
+        assertNotEquals("DataFrame ne doit pas equals a null",df1, null);
+        assertEquals("probleme dans la fonction equals,ces deux objets ont le meme contenu",df1,df2);
     }
 
 }

@@ -1,6 +1,7 @@
 package data_structure;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,11 +35,11 @@ public class DataFrame{
      */
     public DataFrame(String[] mIndexes, String[] mLabels, List<?>... columnsCells){
         if(mLabels.length != columnsCells.length )
-            throw new IllegalArgumentException("Le nombre de label doit-etre egale au nombre de columns");
+            throw new IllegalArgumentException("Le nombre de labels doit-etre egale au nombre de colonnes");
 
         for (List<?> cells : columnsCells) {
             if(mIndexes.length != cells.size()) {
-                throw new IllegalArgumentException("La nombre d'indices doit-etre egale a la taille de columns");
+                throw new IllegalArgumentException("Le nombre d'indices doit-etre egale a la taille de colonnes");
             }else{
                 columns.add(new Column<>(cells));
             }
@@ -162,6 +163,36 @@ public class DataFrame{
     }
 
     /**
+     * Cree un nouveau DataFrame en selectionnant les indices passer en paramètre
+     * @param selected_Indexes les lignes à retourner
+     * @return un DataFrame des celulles des lignes passer en paramètre
+     * @throws IndexOutOfBoundsException si l'une des indices passer en paramètre est en dehors du rang
+     */
+    public DataFrame iloc(int... selected_Indexes){
+        if(selected_Indexes.length==0)
+            throw new IllegalArgumentException("Il faut passer au moins un paramètre");
+
+        List <String> mIndexes = new ArrayList<>();
+        List[] columnsCells = new List[labels.size()];
+
+        for(int index : selected_Indexes){
+            mIndexes.add(indexes.get(index));
+
+            int columnIndex = 0;
+            for(Column column : columns) {
+                if(columnsCells[columnIndex]==null){
+                    columnsCells[columnIndex] = new ArrayList();
+                }
+                columnsCells[columnIndex].add(column.getCells().get(index));
+                columnIndex++;
+            }
+
+        }
+
+        return new DataFrame(mIndexes.toArray(new String[0]),labels.toArray(new String[0]), columnsCells);
+    }
+
+    /**
      * Getter
      * @return Liste des indices
      */
@@ -183,5 +214,19 @@ public class DataFrame{
      */
     public List<Column> getColumns() {
         return columns;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DataFrame dataFrame = (DataFrame) o;
+
+        if (indexes != null ? !indexes.equals(dataFrame.indexes) : dataFrame.indexes != null) return false;
+        if (labels != null ? !labels.equals(dataFrame.labels) : dataFrame.labels != null) return false;
+        return columns != null ? columns.equals(dataFrame.columns) : dataFrame.columns == null;
+
     }
 }
