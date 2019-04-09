@@ -1,9 +1,9 @@
 package data_structure;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class DataFrame{
 
@@ -228,6 +228,62 @@ public class DataFrame{
     }
 
     /**
+     * Calcule la somme de chaque colonne (affichage par colonne)
+     */
+    public List<Double> sum(){
+        return sum(0);
+    }
+
+    /**
+     * Calcule la somme de l'axis passer en paramètre
+     * @param axis 0 Calcule la somme de chaque colonne(affichage par colonne), 1 Calcule la somme de chaque ligne (affichage par ligne)
+     */
+    public List<Double> sum(int axis){
+        return sum(axis,true);
+    }
+
+    /**
+     * Calcule la somme de l'axis passer en paramètre
+     *
+     * @param axis 0 Calcule la somme de chaque colonne(affichage par colonne), 1 Calcule la somme de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     */
+    public List <Double> sum(int axis, boolean skipNa){
+        List <Double> results = new ArrayList<>();
+        if(axis == 0){
+            for (Column column : columns) {
+                double  columnSum = 0;
+                for (Object cell : column.getCells()) {
+                    columnSum = sumCore(columnSum,cell,skipNa);
+                }
+                results.add(columnSum);
+            }
+        }else if(axis == 1){
+            for(int i = 0; i < indexes.size(); i++) {
+                double columnSum = 0;
+                for (Column column : columns) {
+                    Object cell = column.getCells().get(i);
+                    columnSum = sumCore(columnSum,cell,skipNa);
+                }
+                results.add(columnSum);
+            }
+        }
+        return results;
+    }
+
+    private double sumCore(double columnSum, Object cell, boolean skipNa) {
+        try {
+            columnSum += Double.parseDouble(String.valueOf(cell));
+        }catch (NumberFormatException n){
+            if(!skipNa){
+                columnSum += Double.parseDouble("NaN");//Sum of this column is NaN
+            }
+        }
+        return columnSum;
+    }
+
+
+    /**
      * Getter
      * @return Liste des indices
      */
@@ -259,9 +315,9 @@ public class DataFrame{
 
         DataFrame dataFrame = (DataFrame) o;
 
-        if (indexes != null ? !indexes.equals(dataFrame.indexes) : dataFrame.indexes != null) return false;
-        if (labels != null ? !labels.equals(dataFrame.labels) : dataFrame.labels != null) return false;
-        return columns != null ? columns.equals(dataFrame.columns) : dataFrame.columns == null;
+        if (!Objects.equals(indexes, dataFrame.indexes)) return false;
+        if (!Objects.equals(labels, dataFrame.labels)) return false;
+        return Objects.equals(columns, dataFrame.columns);
 
     }
 }
