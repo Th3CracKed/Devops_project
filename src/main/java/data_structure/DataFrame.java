@@ -57,7 +57,7 @@ public class DataFrame{
             if(mIndexes.size() != col.numberOfCells()) {
                 throw new IllegalArgumentException("Le nombre d'indices doit-etre égale à la taille de colonnes");
             }else{
-                //columns.add(new Column<>(cells));
+                columns.add(col);
             }
         }
 

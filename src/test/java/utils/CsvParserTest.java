@@ -10,7 +10,7 @@ public class CsvParserTest {
 
     private CsvParser myParser;
     @Test
-    public void testConstructor() {
+    public void testAvecIndex() {
         try {
             myParser = new CsvParser("rsc/csv_examples/test.csv");
         } catch (IOException e) {
@@ -18,6 +18,18 @@ public class CsvParserTest {
         }
         DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
         assertNotEquals(null,dataframe);
+    }
+
+    @Test
+    public void testSansIndex() {
+        try {
+            myParser = new CsvParser("rsc/csv_examples/test_sans_index.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        assertNotEquals(null,dataframe);
+
     }
 
     @Test
