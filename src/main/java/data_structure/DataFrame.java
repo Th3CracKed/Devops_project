@@ -229,6 +229,7 @@ public class DataFrame{
 
     /**
      * Calcule la somme de chaque colonne (affichage par colonne)
+     * @return liste des sommes
      */
     public List<Double> sum(){
         return sum(0);
@@ -237,6 +238,7 @@ public class DataFrame{
     /**
      * Calcule la somme de l'axis passer en paramètre
      * @param axis 0 Calcule la somme de chaque colonne(affichage par colonne), 1 Calcule la somme de chaque ligne (affichage par ligne)
+     * @return liste des sommes
      */
     public List<Double> sum(int axis){
         return sum(axis,true);
@@ -247,6 +249,7 @@ public class DataFrame{
      *
      * @param axis 0 Calcule la somme de chaque colonne(affichage par colonne), 1 Calcule la somme de chaque ligne (affichage par ligne)
      * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des sommes
      */
     public List <Double> sum(int axis, boolean skipNa){
         List <Double> results = new ArrayList<>();
@@ -271,8 +274,19 @@ public class DataFrame{
         return results;
     }
 
+    /**
+     * calcule la somme courrante
+     * @param columnSum la somme courrante
+     * @param cell la valeur de la celulle courante
+     * @param skipNa ignore les valeurs null ou non
+     * @return la somme avec la cellule courrante
+     */
     private double sumCore(double columnSum, Object cell, boolean skipNa) {
         try {
+            //handle case when cell's value is 'NaN' which is treated as legit double value
+            if(skipNa && (String.valueOf(cell).equals("NaN") || String.valueOf(cell).equals("+NaN") || String.valueOf(cell).equals("-NaN"))){
+                return columnSum;
+            }
             columnSum += Double.parseDouble(String.valueOf(cell));
         }catch (NumberFormatException n){
             if(!skipNa){
@@ -282,6 +296,73 @@ public class DataFrame{
         return columnSum;
     }
 
+    /**
+     * Trouve le minimum de chaque colonne (affichage par colonne)
+     * @return liste des mins
+     */
+    public List<Double> min(){
+        return min(0);
+    }
+
+    /**
+     *
+     * @param axis 0 trouve le min de chaque colonne(affichage par colonne), 1 trouve le min de chaque ligne (affichage par ligne)
+     * @return liste des mins
+     */
+    public List<Double> min(int axis) {
+        return min(axis,true);
+    }
+
+    /**
+     *
+     * @param axis 0 Calcule le min de chaque colonne(affichage par colonne), 1 trouve le min de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des mins
+     */
+    public List<Double> min(int axis, boolean skipNa) {
+        List <Double> results = new ArrayList<>();
+        if(axis == 0){
+            for (Column column : columns) {
+                double currentMin = Double.MAX_VALUE;
+                for (Object cell : column.getCells()) {
+                    currentMin = minCore(currentMin,cell,skipNa);
+                }
+                results.add(currentMin);
+            }
+        }else if(axis == 1){
+            for(int i = 0; i < indexes.size(); i++) {
+                double currentMin = Double.MAX_VALUE;
+                for (Column column : columns) {
+                    Object cell = column.getCells().get(i);
+                    currentMin = minCore(currentMin,cell,skipNa);
+                }
+                results.add(currentMin);
+            }
+        }
+        return results;
+    }
+
+    /**
+     *
+     * @param currentMin le minimum courrant
+     * @param cell la valeur de la celulle courante
+     * @param skipNa ignore les valeurs null ou non
+     * @return le min de toute les celulles precedente (la cellule courrante inclus)
+     */
+    private double minCore(double currentMin, Object cell, boolean skipNa) {
+        try {
+            //handle case when cell's value is 'NaN' which is treated as legit double value
+            if(skipNa && (String.valueOf(cell).equals("NaN") || String.valueOf(cell).equals("+NaN") || String.valueOf(cell).equals("-NaN"))){
+                return currentMin;
+            }
+            currentMin = Double.min(currentMin,Double.parseDouble(String.valueOf(cell)));
+        }catch (NumberFormatException n){
+            if(!skipNa){
+                currentMin = Double.parseDouble("NaN");//Sum of this column is NaN
+            }
+        }
+        return currentMin;
+    }
 
     /**
      * Getter
