@@ -51,4 +51,23 @@ public class DataFrameStatsTest {
         List<Double> expectedList = Arrays.asList(2.0, -5.0, Double.parseDouble("NaN"), Double.parseDouble("NaN"));//min des lignes
         assertEquals("Le minimum attendu pour chaque ligne n'est pas correcte",expectedList,dataFrame.min(1,false));
     }
+
+    @Test
+    public void test_max(){
+        List<Double> expectedList = Arrays.asList(54.2,5.0,245.2);//max des colonnes
+        assertEquals("Le maximum attendu pour chaque colonne n'est pas correcte",expectedList,dataFrame.max());
+    }
+
+    @Test
+    public void test_max_axis1(){
+        List<Double> expectedList = Arrays.asList(245.2, 54.2,12.1,122.0);//max des lignes
+        assertEquals("Le maximum attendu pour chaque ligne n'est pas correcte",expectedList,dataFrame.max(1));
+    }
+
+    @Test
+    public void test_max_skipna_false(){
+        List<Double> expectedList = Arrays.asList(245.2, 54.2, Double.parseDouble("NaN"), Double.parseDouble("NaN"));//max des lignes
+        assertEquals("Le maximum attendu pour chaque ligne n'est pas correcte",expectedList,dataFrame.max(1,false));
+    }
+
 }

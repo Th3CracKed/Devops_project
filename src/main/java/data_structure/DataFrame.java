@@ -268,6 +268,7 @@ public class DataFrame{
                     Object cell = column.getCells().get(i);
                     columnSum = sumCore(columnSum,cell,skipNa);
                 }
+                //TODO
                 results.add(columnSum);
             }
         }
@@ -284,7 +285,7 @@ public class DataFrame{
     private double sumCore(double columnSum, Object cell, boolean skipNa) {
         try {
             //handle case when cell's value is 'NaN' which is treated as legit double value
-            if(skipNa && (String.valueOf(cell).equals("NaN") || String.valueOf(cell).equals("+NaN") || String.valueOf(cell).equals("-NaN"))){
+            if(skipNa && Double.isNaN(Double.parseDouble(String.valueOf(cell)) )){
                 return columnSum;
             }
             columnSum += Double.parseDouble(String.valueOf(cell));
@@ -352,7 +353,7 @@ public class DataFrame{
     private double minCore(double currentMin, Object cell, boolean skipNa) {
         try {
             //handle case when cell's value is 'NaN' which is treated as legit double value
-            if(skipNa && (String.valueOf(cell).equals("NaN") || String.valueOf(cell).equals("+NaN") || String.valueOf(cell).equals("-NaN"))){
+            if(skipNa && Double.isNaN(Double.parseDouble(String.valueOf(cell))) ){
                 return currentMin;
             }
             currentMin = Double.min(currentMin,Double.parseDouble(String.valueOf(cell)));
@@ -363,6 +364,76 @@ public class DataFrame{
         }
         return currentMin;
     }
+
+
+    /**
+     * Trouve le maximum de chaque colonne (affichage par colonne)
+     * @return liste des maxs
+     */
+    public List<Double> max(){
+        return max(0);
+    }
+
+    /**
+     *
+     * @param axis 0 trouve le max de chaque colonne(affichage par colonne), 1 trouve le max de chaque ligne (affichage par ligne)
+     * @return liste des maxs
+     */
+    public List<Double> max(int axis) {
+        return max(axis,true);
+    }
+
+    /**
+     *
+     * @param axis 0 Calcule le max de chaque colonne(affichage par colonne), 1 trouve le max de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des maxs
+     */
+    public List<Double> max(int axis, boolean skipNa) {
+        List <Double> results = new ArrayList<>();
+        if(axis == 0){
+            for (Column column : columns) {
+                double currentMax = Double.MIN_VALUE;
+                for (Object cell : column.getCells()) {
+                    currentMax = maxCore(currentMax,cell,skipNa);
+                }
+                results.add(currentMax);
+            }
+        }else if(axis == 1){
+            for(int i = 0; i < indexes.size(); i++) {
+                double currentMax = Double.MIN_VALUE;
+                for (Column column : columns) {
+                    Object cell = column.getCells().get(i);
+                    currentMax = maxCore(currentMax,cell,skipNa);
+                }
+                results.add(currentMax);
+            }
+        }
+        return results;
+    }
+
+    /**
+     *
+     * @param currentMax le maximum courrant
+     * @param cell la valeur de la celulle courante
+     * @param skipNa ignore les valeurs null ou non
+     * @return le max de toute les celulles precedente (la cellule courrante inclus)
+     */
+    private double maxCore(double currentMax, Object cell, boolean skipNa) {
+        try {
+            //handle case when cell's value is 'NaN' which is treated as legit double value
+            if(skipNa && Double.isNaN(Double.parseDouble(String.valueOf(cell))) ){
+                return currentMax;
+            }
+            currentMax = Double.max(currentMax,Double.parseDouble(String.valueOf(cell)));
+        }catch (NumberFormatException n){
+            if(!skipNa){
+                currentMax = Double.parseDouble("NaN");//Sum of this column is NaN
+            }
+        }
+        return currentMax;
+    }
+
 
     /**
      * Getter
