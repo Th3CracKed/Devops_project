@@ -7,7 +7,7 @@ import java.util.List;
  * L'accès à cette class est dans le package seulement
  * @param <E> le type de cette colonne définit par l'utilisateur
  */
-class Column<E> {
+public class Column<E> {
 
     /**
      * La liste des cellules dans cette colonne avec le même type
