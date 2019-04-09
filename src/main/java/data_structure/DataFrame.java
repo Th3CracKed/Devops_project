@@ -268,7 +268,6 @@ public class DataFrame{
                     Object cell = column.getCells().get(i);
                     columnSum = sumCore(columnSum,cell,skipNa);
                 }
-                //TODO
                 results.add(columnSum);
             }
         }
@@ -295,6 +294,53 @@ public class DataFrame{
             }
         }
         return columnSum;
+    }
+
+    /**
+     * Calcule la moyenne de chaque colonne (affichage par colonne)
+     * @return liste des moyens
+     */
+    public List<Double> avg(){
+        return avg(0);
+    }
+
+    /**
+     * Calcule la moyenne de l'axis passer en paramètre
+     * @param axis 0 Calcule la moyenne de chaque colonne(affichage par colonne), 1 Calcule la moyenne de chaque ligne (affichage par ligne)
+     * @return liste des moyens
+     */
+    public List<Double> avg(int axis){
+        return avg(axis,true);
+    }
+
+    /**
+     * Calcule la moyenne de l'axis passer en paramètre
+     *
+     * @param axis 0 Calcule la moyenne de chaque colonne(affichage par colonne), 1 Calcule la moyenne de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des moyens
+     */
+    public List <Double> avg(int axis, boolean skipNa){
+        List <Double> results = new ArrayList<>();
+        if(axis == 0){
+            for (Column column : columns) {
+                double  columnSum = 0;
+                for (Object cell : column.getCells()) {
+                    columnSum = sumCore(columnSum,cell,skipNa);
+                }
+                results.add(columnSum / column.getCells().size());
+            }
+        }else if(axis == 1){
+            for(int i = 0; i < indexes.size(); i++) {
+                double columnSum = 0;
+                for (Column column : columns) {
+                    Object cell = column.getCells().get(i);
+                    columnSum = sumCore(columnSum,cell,skipNa);
+                }
+                results.add(columnSum / columns.size());
+            }
+        }
+        return results;
     }
 
     /**
