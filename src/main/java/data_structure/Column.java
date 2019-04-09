@@ -6,7 +6,7 @@ import java.util.List;
  * Permet à DataFrame de définir une liste de colonnes avec different type
  * @param <E> le type de cette colonne définit par l'utilisateur
  */
-class Column<E> {
+public class Column<E> {
 
     /**
      * La liste des cellules dans cette colonne avec le même type
