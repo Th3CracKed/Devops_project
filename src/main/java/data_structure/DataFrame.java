@@ -49,6 +49,23 @@ public class DataFrame{
 
     }
 
+    public DataFrame(List<String> mIndexes, List<String> mLabels, List<Column> columnsCells){
+        if(mLabels.size() != columnsCells.size())
+            throw new IllegalArgumentException("Le nombre de label doit-etre egale au nombre de colonnes");
+
+        for (Column col : columnsCells) {
+            if(mIndexes.size() != col.numberOfCells()) {
+                throw new IllegalArgumentException("Le nombre d'indices doit-etre égale à la taille de colonnes");
+            }else{
+                //columns.add(new Column<>(cells));
+            }
+        }
+
+        indexes=mIndexes;
+        labels=mLabels;
+
+    }
+
     /**
      * Affiche tout le DataFrame
      */

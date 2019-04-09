@@ -1,7 +1,7 @@
 package utils;
 
+import data_structure.DataFrame;
 import org.junit.Test;
-
 import java.io.IOException;
 
 import static org.junit.Assert.*;
@@ -16,7 +16,8 @@ public class CsvParserTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assertNotEquals(null,myParser);
+        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        assertNotEquals(null,dataframe);
     }
 
     @Test
