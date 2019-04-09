@@ -1,6 +1,7 @@
 package utils;
 
 
+import data_structure.Column;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -20,6 +21,7 @@ public class CsvParser {
 
     private ArrayList<String> indexes = new ArrayList<>();
     private ArrayList<String> labels = new ArrayList<>();
+    private ArrayList <Column> columns = new ArrayList<>();
     private boolean containsIndex = false;
 
     public CsvParser(String filename) throws IOException {
@@ -45,6 +47,7 @@ public class CsvParser {
     }
 
     public ArrayList<String> getLabels(){
+
         return labels;
     }
 
