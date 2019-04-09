@@ -48,6 +48,10 @@ public class Column<E> {
         return cells.equals(column.cells);
     }
 
+    /**
+     * Ajout un élément à la liste
+     * @param element L'élément de type E à ajouter, soit un entier, soit un float, soit un string
+     */
     public void add(E element){
         cells.add(element);
     }

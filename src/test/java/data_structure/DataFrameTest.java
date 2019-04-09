@@ -25,6 +25,11 @@ public class DataFrameTest {
     }
 
     @Test
+    public void testContructor2(){
+        assertNotEquals(null,dataFrame);
+    }
+
+    @Test
     public void testIndexs(){
         assertEquals("Les Indices passer en paramètre ne sont pas les mêmes dans le DataFrame",dataFrame.getIndexes(),Arrays.asList(mIndexs));
     }

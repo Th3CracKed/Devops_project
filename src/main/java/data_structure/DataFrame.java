@@ -49,13 +49,24 @@ public class DataFrame{
 
     }
 
+
+    /**
+     * Constructeur prenant en paramètre le contenu de chaque colonne sous forme d’une List
+     * Le nombres d'indices doit être égale aux nombres de cellules dans chaque colonnes
+     * Le nombres de labels doit être égale aux nombres de colonnes
+     * @param mIndexes liste d'identifiants de lignes
+     * @param mLabels liste de labels de colonnes
+     * @param columnsCells liste de colonnes
+     * @throws NullPointerException Si l'une des lists specifiée vaut null
+     * @throws IllegalArgumentException Si la taille de données n'est pas cohérante
+     */
     public DataFrame(List<String> mIndexes, List<String> mLabels, List<Column> columnsCells){
         if(mLabels.size() != columnsCells.size())
             throw new IllegalArgumentException("Le nombre de label doit-etre egale au nombre de colonnes");
 
         for (Column col : columnsCells) {
             if(mIndexes.size() != col.numberOfCells()) {
-                throw new IllegalArgumentException("Le nombre d'indices doit-etre égale à la taille de colonnes");
+                throw new IllegalArgumentException("Le nombre d'indices doit-etre egale à la taille de colonnes");
             }else{
                 columns.add(col);
             }

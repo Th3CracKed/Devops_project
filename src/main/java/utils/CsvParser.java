@@ -17,6 +17,9 @@ import java.util.List;
 3 test3 6 6
  */
 
+/**
+ * La classe permettant de parser un CSV, indépendante de Dataframe.
+ */
 public class CsvParser {
 
     private ArrayList<String> indexes = new ArrayList<>();
@@ -24,6 +27,11 @@ public class CsvParser {
     private ArrayList <Column> columns = new ArrayList<>();
     private boolean containsIndex = false;
 
+    /**
+     *
+     * @param filename Le nom du fichier
+     * @throws IOException
+     */
     public CsvParser(String filename) throws IOException {
         ArrayList<ArrayList<String>> records = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -57,28 +65,46 @@ public class CsvParser {
                 indexes.add(""+i);
             }
             for(int j=0;j<labels.size();j++){
-                columns.get(j).add(records.get(i).get(j));
+                float f;
+                String val = records.get(i).get(j);
+                try {
+                    f = Float.valueOf(val.trim()).floatValue();
+                    if(f-Math.round(f)<=0){
+                        columns.get(j).add(Math.round(f));
+                    }
+                    else{
+                        columns.get(j).add(f);
+                    }
+                } catch (NumberFormatException e) {
+                    columns.get(j).add(val);
+                }
+
             }
 
-
-
-            //columns.add()
         }
-
-
-        //DataFrame res = null;
-        //DataFrame res = new DataFrame(mIndexs, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","6"));
     }
 
+    /**
+     * Get labels
+     * @return La liste des labels
+     */
     public ArrayList<String> getLabels(){
 
         return labels;
     }
 
+    /**
+     * Get indexes
+     * @return La liste des indexes
+     */
     public ArrayList<String> getIndexes(){
         return indexes;
     }
 
+    /**
+     * Get columns
+     * @return La liste des colonnes
+     */
     public ArrayList<Column> getColumns(){
         return columns;
     }

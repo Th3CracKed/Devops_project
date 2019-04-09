@@ -33,10 +33,37 @@ public class CsvParserTest {
     }
 
     @Test
+    public void testFloat() {
+        try {
+            myParser = new CsvParser("rsc/csv_examples/test_avec_float.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        assertNotEquals(null,dataframe);
+
+    }
+
+    @Test
+    public void testInt() {
+        try {
+            myParser = new CsvParser("rsc/csv_examples/test_avec_int.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        assertNotEquals(null,dataframe);
+
+    }
+    @Test
     public void getLabels() {
     }
 
     @Test
     public void getIndexes() {
+    }
+
+    @Test
+    public void getColumns() {
     }
 }
