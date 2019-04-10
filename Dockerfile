@@ -1,5 +1,5 @@
 # Use phusion/baseimage as base image.
-FROM phusion/baseimage:0.11
+FROM hyperknot/baseimage16:1.0.7
 
 LABEL maintainer="Driowyaa@@etu.univ-grenoble-alpes.fr"
 
