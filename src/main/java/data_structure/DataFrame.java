@@ -3,6 +3,7 @@ package data_structure;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class DataFrame{
 
@@ -34,11 +35,11 @@ public class DataFrame{
      */
     public DataFrame(String[] mIndexes, String[] mLabels, List<?>... columnsCells){
         if(mLabels.length != columnsCells.length )
-            throw new IllegalArgumentException("Le nombre de label doit-etre egale au nombre de columns");
+            throw new IllegalArgumentException("Le nombre de labels doit-etre egale au nombre de colonnes");
 
         for (List<?> cells : columnsCells) {
             if(mIndexes.length != cells.size()) {
-                throw new IllegalArgumentException("La nombre d'indices doit-etre egale a la taille de columns");
+                throw new IllegalArgumentException("Le nombre d'indices doit-etre egale a la taille de colonnes");
             }else{
                 columns.add(new Column<>(cells));
             }
@@ -80,38 +81,48 @@ public class DataFrame{
     /**
      * Affiche tout le DataFrame
      */
-    public void printAll(){
-        System.out.println(printCore(indexes.size(),true));
+    public String printAll(){
+        String result = printCore(indexes.size(),true);
+        System.out.println(result);
+        return result;
     }
 
     /**
      * Affiche les premières lignes de DataFrame
      */
-    public void printHead(){
-        System.out.println(printCore(indexes.size()-1,true));
+    public String printHead(){
+        String result = printCore(indexes.size()-1,true);
+        System.out.println(result);
+        return result;
     }
 
     /**
      * Affiche les premières lignes de DataFrame
      * @param nbLines le nombre de lignes à afficher
      */
-    public void printHead(int nbLines){
-        System.out.println(printCore(nbLines,true));
+    public String printHead(int nbLines){
+        String result = printCore(nbLines,true);
+        System.out.println(result);
+        return result;
     }
 
     /**
      * Affiche les dernières lignes de DataFrame
      */
-    public void printTail(){
-        System.out.println(printCore(indexes.size()-1,false));
+    public String printTail(){
+        String result = printCore(indexes.size()-1,false);
+        System.out.println(result);
+        return result;
     }
 
     /**
      * Affiche les dernières lignes de DataFrame
      * @param nbLines le nombre de lignes à afficher
      */
-    public void printTail(int nbLines){
-        System.out.println(printCore(nbLines,false));
+    public String printTail(int nbLines){
+        String result = printCore(nbLines,false);
+        System.out.println(result);
+        return result;
     }
 
     /**
@@ -190,6 +201,339 @@ public class DataFrame{
     }
 
     /**
+     * Cree un nouveau DataFrame en selectionnant les indices passer en paramètre
+     * @param selected_Indexes les lignes à retourner
+     * @return un DataFrame des celulles des lignes passer en paramètre
+     * @throws IndexOutOfBoundsException si l'une des indices passer en paramètre est en dehors du rang
+     * @throws IllegalArgumentException si aucun paramètre n'est passer
+     */
+    public DataFrame iloc(int... selected_Indexes){
+        if(selected_Indexes.length==0)
+            throw new IllegalArgumentException("Il faut passer au moins un paramètre");
+
+        List <String> mIndexes = new ArrayList<>();
+        List[] columnsCells = new List[labels.size()];
+
+        for(int index : selected_Indexes){
+            mIndexes.add(indexes.get(index));
+
+            int columnIndex = 0;
+            for(Column column : columns) {
+                if(columnsCells[columnIndex]==null){
+                    columnsCells[columnIndex] = new ArrayList();
+                }
+                columnsCells[columnIndex].add(column.getCells().get(index));
+                columnIndex++;
+            }
+
+        }
+
+        return new DataFrame(mIndexes.toArray(new String[0]),labels.toArray(new String[0]), columnsCells);
+    }
+
+    /**
+     * Cree un nouveau DataFrame en selectionnant les labels passer en paramètre
+     * si un label n'est pas trouvé retourne des colonnes avec la valeur 'NaN'
+     * @param selected_Labels les colonnes à retourner
+     * @return un DataFrame à partir des colonnes passer en paramètre
+     * @throws IllegalArgumentException si aucun paramètre n'est passer
+     */
+    public DataFrame loc(String... selected_Labels){
+        if(selected_Labels.length==0)
+            throw new IllegalArgumentException("Il faut passer au moins un paramètre");
+
+        List <String> mIndexes = new ArrayList<>();
+        List[] columnsCells = new List[labels.size()];
+
+        for(String label : selected_Labels){
+            mIndexes.add(label);
+            int index = indexes.indexOf(label);
+            int columnIndex = 0;
+            for(Column column : columns) {
+                if(columnsCells[columnIndex]==null){
+                    columnsCells[columnIndex] = new ArrayList();
+                }
+                if(index!=-1) {
+                    columnsCells[columnIndex].add(column.getCells().get(index));
+                }else{
+                    columnsCells[columnIndex].add("NaN");//label not found
+                }
+                columnIndex++;
+            }
+        }
+
+        return new DataFrame(mIndexes.toArray(new String[0]),labels.toArray(new String[0]), columnsCells);
+    }
+
+    /**
+     * Calcule la somme de chaque colonne (affichage par colonne)
+     * @return liste des sommes
+     */
+    public List<Double> sum(){
+        return sum(0);
+    }
+
+    /**
+     * Calcule la somme de l'axis passer en paramètre
+     * @param axis 0 Calcule la somme de chaque colonne(affichage par colonne), 1 Calcule la somme de chaque ligne (affichage par ligne)
+     * @return liste des sommes
+     */
+    public List<Double> sum(int axis){
+        return sum(axis,true);
+    }
+
+    /**
+     * Calcule la somme de l'axis passer en paramètre
+     *
+     * @param axis 0 Calcule la somme de chaque colonne(affichage par colonne), 1 Calcule la somme de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des sommes
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
+     */
+    public List <Double> sum(int axis, boolean skipNa){
+        if(axis != 1 && axis !=0 )
+            throw new IllegalArgumentException("Il faut passer 0 ou 1 comme axis");
+
+        List <Double> results = new ArrayList<>();
+        if(axis == 0){
+            for (Column column : columns) {
+                double  columnSum = 0;
+                for (Object cell : column.getCells()) {
+                    columnSum = sumCore(columnSum,cell,skipNa);
+                }
+                results.add(columnSum);
+            }
+        }else {
+            for(int i = 0; i < indexes.size(); i++) {
+                double columnSum = 0;
+                for (Column column : columns) {
+                    Object cell = column.getCells().get(i);
+                    columnSum = sumCore(columnSum,cell,skipNa);
+                }
+                results.add(columnSum);
+            }
+        }
+        return results;
+    }
+
+    /**
+     * calcule la somme courrante
+     * @param columnSum la somme courrante
+     * @param cell la valeur de la celulle courante
+     * @param skipNa ignore les valeurs null ou non
+     * @return la somme avec la cellule courrante
+     */
+    private double sumCore(double columnSum, Object cell, boolean skipNa) {
+        try {
+            //handle case when cell's value is 'NaN' which is treated as legit double value
+            if(skipNa && Double.isNaN(Double.parseDouble(String.valueOf(cell)) )){
+                return columnSum;
+            }
+            columnSum += Double.parseDouble(String.valueOf(cell));
+        }catch (NumberFormatException n){
+            if(!skipNa){
+                columnSum += Double.parseDouble("NaN");//Sum of this column is NaN
+            }
+        }
+        return columnSum;
+    }
+
+    /**
+     * Calcule la moyenne de chaque colonne (affichage par colonne)
+     * @return liste des moyens
+     */
+    public List<Double> avg(){
+        return avg(0);
+    }
+
+    /**
+     * Calcule la moyenne de l'axis passer en paramètre
+     * @param axis 0 Calcule la moyenne de chaque colonne(affichage par colonne), 1 Calcule la moyenne de chaque ligne (affichage par ligne)
+     * @return liste des moyens
+     */
+    public List<Double> avg(int axis){
+        return avg(axis,true);
+    }
+
+    /**
+     * Calcule la moyenne de l'axis passer en paramètre
+     *
+     * @param axis 0 Calcule la moyenne de chaque colonne(affichage par colonne), 1 Calcule la moyenne de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des moyens
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
+     */
+    public List <Double> avg(int axis, boolean skipNa){
+        if(axis != 1 && axis !=0 )
+            throw new IllegalArgumentException("Il faut passer 0 ou 1 comme axis");
+
+        List <Double> results = new ArrayList<>();
+        if(axis == 0){
+            for (Column column : columns) {
+                double  columnSum = 0;
+                for (Object cell : column.getCells()) {
+                    columnSum = sumCore(columnSum,cell,skipNa);
+                }
+                results.add(columnSum / column.getCells().size());
+            }
+        }else {
+            for(int i = 0; i < indexes.size(); i++) {
+                double columnSum = 0;
+                for (Column column : columns) {
+                    Object cell = column.getCells().get(i);
+                    columnSum = sumCore(columnSum,cell,skipNa);
+                }
+                results.add(columnSum / columns.size());
+            }
+        }
+        return results;
+    }
+
+    /**
+     * Trouve le minimum de chaque colonne (affichage par colonne)
+     * @return liste des mins
+     */
+    public List<Double> min(){
+        return min(0);
+    }
+
+    /**
+     *
+     * @param axis 0 trouve le min de chaque colonne(affichage par colonne), 1 trouve le min de chaque ligne (affichage par ligne)
+     * @return liste des mins
+     */
+    public List<Double> min(int axis) {
+        return min(axis,true);
+    }
+
+    /**
+     *
+     * @param axis 0 Calcule le min de chaque colonne(affichage par colonne), 1 trouve le min de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des mins
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
+     */
+    public List<Double> min(int axis, boolean skipNa) {
+        if(axis != 1 && axis !=0 )
+            throw new IllegalArgumentException("Il faut passer 0 ou 1 comme axis");
+        List <Double> results = new ArrayList<>();
+        if(axis == 0){
+            for (Column column : columns) {
+                double currentMin = Double.MAX_VALUE;
+                for (Object cell : column.getCells()) {
+                    currentMin = minCore(currentMin,cell,skipNa);
+                }
+                results.add(currentMin);
+            }
+        }else {
+            for(int i = 0; i < indexes.size(); i++) {
+                double currentMin = Double.MAX_VALUE;
+                for (Column column : columns) {
+                    Object cell = column.getCells().get(i);
+                    currentMin = minCore(currentMin,cell,skipNa);
+                }
+                results.add(currentMin);
+            }
+        }
+        return results;
+    }
+
+    /**
+     *
+     * @param currentMin le minimum courrant
+     * @param cell la valeur de la celulle courante
+     * @param skipNa ignore les valeurs null ou non
+     * @return le min de toute les celulles precedente (la cellule courrante inclus)
+     */
+    private double minCore(double currentMin, Object cell, boolean skipNa) {
+        try {
+            //handle case when cell's value is 'NaN' which is treated as legit double value
+            if(skipNa && Double.isNaN(Double.parseDouble(String.valueOf(cell))) ){
+                return currentMin;
+            }
+            currentMin = Double.min(currentMin,Double.parseDouble(String.valueOf(cell)));
+        }catch (NumberFormatException n){
+            if(!skipNa){
+                currentMin = Double.parseDouble("NaN");//Sum of this column is NaN
+            }
+        }
+        return currentMin;
+    }
+
+
+    /**
+     * Trouve le maximum de chaque colonne (affichage par colonne)
+     * @return liste des maxs
+     */
+    public List<Double> max(){
+        return max(0);
+    }
+
+    /**
+     *
+     * @param axis 0 trouve le max de chaque colonne(affichage par colonne), 1 trouve le max de chaque ligne (affichage par ligne)
+     * @return liste des maxs
+     */
+    public List<Double> max(int axis) {
+        return max(axis,true);
+    }
+
+    /**
+     *
+     * @param axis 0 Calcule le max de chaque colonne(affichage par colonne), 1 trouve le max de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des maxs
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
+     */
+    public List<Double> max(int axis, boolean skipNa) {
+        if(axis != 1 && axis !=0 )
+            throw new IllegalArgumentException("Il faut passer 0 ou 1 comme axis");
+        List <Double> results = new ArrayList<>();
+        if(axis == 0){
+            for (Column column : columns) {
+                double currentMax = Double.MIN_VALUE;
+                for (Object cell : column.getCells()) {
+                    currentMax = maxCore(currentMax,cell,skipNa);
+                }
+                results.add(currentMax);
+            }
+        }else {
+            for(int i = 0; i < indexes.size(); i++) {
+                double currentMax = Double.MIN_VALUE;
+                for (Column column : columns) {
+                    Object cell = column.getCells().get(i);
+                    currentMax = maxCore(currentMax,cell,skipNa);
+                }
+                results.add(currentMax);
+            }
+        }
+        return results;
+    }
+
+    /**
+     *
+     * @param currentMax le maximum courrant
+     * @param cell la valeur de la celulle courante
+     * @param skipNa ignore les valeurs null ou non
+     * @return le max de toute les celulles precedente (la cellule courrante inclus)
+     */
+    private double maxCore(double currentMax, Object cell, boolean skipNa) {
+        try {
+            //handle case when cell's value is 'NaN' which is treated as legit double value
+            if(skipNa && Double.isNaN(Double.parseDouble(String.valueOf(cell))) ){
+                return currentMax;
+            }
+            currentMax = Double.max(currentMax,Double.parseDouble(String.valueOf(cell)));
+        }catch (NumberFormatException n){
+            if(!skipNa){
+                currentMax = Double.parseDouble("NaN");//Sum of this column is NaN
+            }
+        }
+        return currentMax;
+    }
+
+
+    /**
      * Getter
      * @return Liste des indices
      */
@@ -211,5 +555,19 @@ public class DataFrame{
      */
     public List<Column> getColumns() {
         return columns;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DataFrame dataFrame = (DataFrame) o;
+
+        if (!Objects.equals(indexes, dataFrame.indexes)) return false;
+        if (!Objects.equals(labels, dataFrame.labels)) return false;
+        return Objects.equals(columns, dataFrame.columns);
+
     }
 }
