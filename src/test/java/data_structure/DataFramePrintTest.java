@@ -1,11 +1,10 @@
 package data_structure;
 
+import manifold.ext.api.Jailbreak;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -173,21 +172,33 @@ public class DataFramePrintTest {
     }
 
     @Test
-    public void test_Find_Max_1() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void test_Find_Max_1() {
+        /*
+        //throws NoSuchMethodException, InvocationTargetException, IllegalAccessException
         Method m = dataFrame.getClass().getDeclaredMethod("findMax", int.class, List.class);
         m.setAccessible(true);
         int max = (int) m.invoke(dataFrame,10, Arrays.asList("","4444","","55555"));
         assertEquals(10,max);
         m.setAccessible(false);
+         */
+        @Jailbreak DataFrame dataFrame = new DataFrame(mIndexes, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
+        int max = dataFrame.findMax(10, Arrays.asList("","4444","","55555"));
+        assertEquals(10,max);
+
     }
 
     @Test
     public void test_Find_Max_2() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        /*
         Method m = dataFrame.getClass().getDeclaredMethod("findMax", int.class, List.class);
         m.setAccessible(true);
         int max = (int) m.invoke(dataFrame,6,Arrays.asList("","465","9498","88888888"));
         assertEquals(8,max);
         m.setAccessible(false);
+        */
+        @Jailbreak DataFrame dataFrame = new DataFrame(mIndexes, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
+        int max = dataFrame.findMax(6, Arrays.asList("","465","9498","88888888"));
+        assertEquals(8,max);
     }
 
 
