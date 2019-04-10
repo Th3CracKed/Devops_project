@@ -65,10 +65,10 @@ public class CsvParser {
                 indexes.add(""+i);
             }
             for(int j=0;j<labels.size();j++){
-                float f;
+                double f;
                 String val = records.get(i).get(j);
                 try {
-                    f = Float.valueOf(val.trim()).floatValue();
+                    f = Double.valueOf(val.trim()).floatValue();
                     if(f-Math.round(f)<=0){
                         columns.get(j).add(Math.round(f));
                     }

@@ -3,6 +3,7 @@ package utils;
 import data_structure.DataFrame;
 import org.junit.Test;
 import java.io.IOException;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -33,7 +34,7 @@ public class CsvParserTest {
     }
 
     @Test
-    public void testFloat() {
+    public void testDouble() {
         try {
             myParser = new CsvParser("rsc/csv_examples/test_avec_float.csv");
         } catch (IOException e) {
@@ -55,6 +56,18 @@ public class CsvParserTest {
         assertNotEquals(null,dataframe);
 
     }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void test_index_en_trop(){
+        try {
+            myParser = new CsvParser("rsc/csv_examples/test_erreur_index.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        assertNotEquals(null,dataframe);
+    }
+
     @Test
     public void getLabels() {
     }
