@@ -2,10 +2,12 @@
 [![Build Status](	https://img.shields.io/github/license/:user/:repo.svg)](https://github.com/Th3CracKed/Devops_project/blob/master/LICENSE.txt)
 # Devops_project
 
-**Couverture du code**
+**Couverture du code : **
+
 Pour vérifier la couverture du code, veuillez vous rendre dans build -> reports -> jacoco 
 
-**Tests**
+**Tests :**
+
 Pour pouvoir tester les méthodes privées, nous avons au débur utilisé Java reflection mais le problème est que si on fait un refactoring de la méthode utilisée, il faut penser a changer ça dans les tests.
 On a donc utilisé le framework Manifold qui permet d'enrichir java avec plein de nouvelles fonctionnalités.
 
