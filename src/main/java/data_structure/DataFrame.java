@@ -2,7 +2,6 @@ package data_structure;
 
 import utils.CsvParser;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +33,7 @@ public class DataFrame{
      * @param mLabels liste de labels de colonnes
      * @param columnsCells liste de contenu des colonnes
      * @throws NullPointerException Si l'une des lists specifier est null
-     * @throws IllegalArgumentException Si la taille de données n'est pas cohérante
+     * @throws IllegalArgumentException Si la taille de données n'est pas cohérente
      */
     public DataFrame(String[] mIndexes, String[] mLabels, List<?>... columnsCells){
         if(mLabels.length != columnsCells.length )
@@ -62,7 +61,7 @@ public class DataFrame{
      * @param mLabels liste de labels de colonnes
      * @param columnsCells liste de colonnes
      * @throws NullPointerException Si l'une des lists specifiée vaut null
-     * @throws IllegalArgumentException Si la taille de données n'est pas cohérante
+     * @throws IllegalArgumentException Si la taille de données n'est pas cohérente
      */
     public DataFrame(List<String> mIndexes, List<String> mLabels, List<Column> columnsCells){
         if(mLabels.size() != columnsCells.size())
@@ -209,7 +208,7 @@ public class DataFrame{
     }
 
     /**
-     * Trouve le maximum entre l'entier et la liste passer en paramètre
+     * Trouve le maximum entre l'entier et la liste passée en paramètre
      * @param currentMax la valeur maximum precèdement trouver
      * @param objects la liste d'objets à parcourir
      */
@@ -222,11 +221,11 @@ public class DataFrame{
     }
 
     /**
-     * Cree un nouveau DataFrame en selectionnant les indices passer en paramètre
+     * Cree un nouveau DataFrame en selectionnant les indices passés en paramètre
      * @param selected_Indexes les lignes à retourner
      * @return un DataFrame des celulles des lignes passer en paramètre
-     * @throws IndexOutOfBoundsException si l'une des indices passer en paramètre est en dehors du rang
-     * @throws IllegalArgumentException si aucun paramètre n'est passer
+     * @throws IndexOutOfBoundsException si l'une des indices passé en paramètre est en dehors du rang
+     * @throws IllegalArgumentException si aucun paramètre n'est passé
      */
     public DataFrame iloc(int... selected_Indexes){
         if(selected_Indexes.length==0)
@@ -253,11 +252,11 @@ public class DataFrame{
     }
 
     /**
-     * Cree un nouveau DataFrame en selectionnant les labels passer en paramètre
-     * si un label n'est pas trouvé retourne des colonnes avec la valeur 'NaN'
+     * Cree un nouveau DataFrame en selectionnant les labels passés en paramètre
+     * si un label n'est pas trouvé, retourne des colonnes avec la valeur 'NaN'
      * @param selected_Labels les colonnes à retourner
-     * @return un DataFrame à partir des colonnes passer en paramètre
-     * @throws IllegalArgumentException si aucun paramètre n'est passer
+     * @return un DataFrame à partir des colonnes passeés en paramètre
+     * @throws IllegalArgumentException si aucun paramètre n'est passé
      */
     public DataFrame loc(String... selected_Labels){
         if(selected_Labels.length==0)
@@ -295,7 +294,7 @@ public class DataFrame{
     }
 
     /**
-     * Calcule la somme de l'axis passer en paramètre
+     * Calcule la somme de l'axis passé en paramètre
      * @param axis 0 Calcule la somme de chaque colonne(affichage par colonne), 1 Calcule la somme de chaque ligne (affichage par ligne)
      * @return liste des sommes
      */
@@ -464,7 +463,7 @@ public class DataFrame{
      * @param currentMin le minimum courrant
      * @param cell la valeur de la celulle courante
      * @param skipNa ignore les valeurs null ou non
-     * @return le min de toute les celulles precedente (la cellule courrante inclus)
+     * @return le min de toutes les celulles precedentes (la cellule courrante inclus)
      */
     private double minCore(double currentMin, Object cell, boolean skipNa) {
         try {
