@@ -4,12 +4,12 @@
 Couverture du code dans build -> reports -> jacoco 
 
 Tests : 
-Pour pouvoir tester les methodes privées, au début on a utilisé Java reflection mais le problème si on fait un refactoring de la méthode utiliser il faut penser a changer ca dans les tests.
-On a donc utiliser Manifold un framework qui permet d'enrechir java avec plein de nouveaux fonctionnalitées.
+Pour pouvoir tester les methodes privées, au début on a utilisé Java reflection mais le problème est que si on fait un refactoring de la méthode utilisée, il faut penser a changer ça dans les tests.
+On a donc utilisé le framework Manifold qui permet d'enrichir java avec plein de nouvelles fonctionnalités.
 
 **Feedback :**   
 Gradle Problèmes :  
-1- Problème de configuration Travis  avec gradle à cause de permission d'execution sur le fichier gradlew   
+1- Problème de configuration Travis avec gradle à cause de permission d'execution sur le fichier gradlew   
 solution :  promouvoir la permission avec git update-index --chmod=+x gradlew  
 ou  ajouter dans le fichier de configuration de travis la règle suivante :
 
