@@ -8,8 +8,12 @@ Pour vérifier la couverture du code, veuillez vous rendre dans build -> reports
 
 **Tests :**
 
-Pour pouvoir tester les méthodes privées, nous avons au débur utilisé Java reflection mais le problème est que si on fait un refactoring de la méthode utilisée, il faut penser a changer ça dans les tests.
-On a donc utilisé le framework Manifold qui permet d'enrichir java avec plein de nouvelles fonctionnalités.
+Pour pouvoir tester les methodes privées, au début on a utilisé Java reflection mais le problème si on fait un refactoring de la méthode utiliser il faut penser a changer ca dans les tests.
+On a donc utiliser Manifold un framework qui permet d'enrechir java avec plein de nouveaux fonctionnalitées.
+(A voir dans la DataFramePrintTest -> test_Find_Max_1)
+
+Manifold permet aussi de faire des extensions de classes cad qu'on peut ajouter des methodes qui seront utiles pour tester une classe lambda sans ajouter du code directement dans cette classe.
+Plus de details : http://manifold.systems/docs.html#self--extensions
 
 **Feedback :**   
 Gradle Problèmes :  
@@ -48,4 +52,13 @@ before_install:
  2,Isabella,Ray,thePNeverland
 
  3,Phoenix,Right,Ace_Attorney
+ 
+ **Docker :**
+ 
+ https://hub.docker.com/r/th3cracked/devops_project/
+ On a utiliser docker hub avec une version minimal de Ubuntu, modifier spécialement pour Docker  https://github.com/phusion/baseimage-docker
+ 
+ L'installation de java est effectuer directement depuis le Dockerfile (on pouvait passer par un script.sh)
+ On a avait trouver aussi une image avec java8 préinstaller https://hub.docker.com/r/anapsix/alpine-java/
+ 
  
