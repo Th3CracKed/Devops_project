@@ -18,7 +18,7 @@ public class Column<E> {
      * Permet de créer une colonne à l'aide d'une ArrayList de colonne
      * @param cells liste des objets de type 'E' a mettre dans cette colonne
      */
-    Column(List<E> cells) {
+    public Column(List<E> cells) {
         this.cells = cells;
     }
 
@@ -26,7 +26,7 @@ public class Column<E> {
      * Un getter
      * @return liste des cellules de type 'E'
      */
-    List<E> getCells() {
+    public List<E> getCells() {
         return cells;
     }
 
@@ -34,7 +34,7 @@ public class Column<E> {
     /**
      * @return nombre de cellules dans la colonne courante
      */
-    int numberOfCells(){
+    public int numberOfCells(){
         return cells.size();
     }
 
