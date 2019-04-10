@@ -9,6 +9,13 @@ import static org.junit.Assert.*;
 
 public class CsvParserTest {
 
+    private String[] mIndexs = new String[]{"1", "2", "3"};
+
+    private String[] mLabels = new String[]{"A", "B", "C"};
+
+    private DataFrame dataFrameTest = new DataFrame(mIndexs, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
+
+
     private CsvParser myParser;
     @Test
     public void testAvecIndex() {
@@ -70,13 +77,34 @@ public class CsvParserTest {
 
     @Test
     public void getLabels() {
+        try {
+            myParser = new CsvParser("rsc/csv_examples/test_basic.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        assertEquals(dataframe.getLabels(),dataFrameTest.getLabels());
     }
 
     @Test
     public void getIndexes() {
+        try {
+            myParser = new CsvParser("rsc/csv_examples/test_basic.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        assertEquals(dataframe.getIndexes(),dataFrameTest.getIndexes());
     }
 
     @Test
     public void getColumns() {
+        try {
+            myParser = new CsvParser("rsc/csv_examples/test_basic.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        assertEquals(dataframe.getColumns().size(),dataFrameTest.getColumns().size());
     }
 }
