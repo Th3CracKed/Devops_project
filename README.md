@@ -20,9 +20,13 @@ before_install:
  - Les éléments doivent être séparés par des virgules.
  Voici un exemple simple de fichier .csv :
 Nom,Prenom,Pseudo,Age
+
 Tommy,Sulivan,Kurapika,12
+
 Younes,Leboss,fayherinn,52
+
 Isabella,Ray,thePNeverland,45
+
 Phoenix,Right,Ace_Attorney,21
 
 Ce fichier ne précise pas de colonne d'index, les indexes seront donc automatiquement générés en "0,1,2,3"
@@ -31,8 +35,12 @@ Autrement, on peut préciser le nom des indexes avec la colonne de nom "Index", 
 Cette colonne sera évidemment supprimée pendant le parsing.
 
 Index,Nom,Prenom,Pseudo
+
 0,Tommy,Sulivan,Kurapika
+
 1,Younes,Leboss,fayherinn
+
 2,Isabella,Ray,thePNeverland
+
 3,Phoenix,Right,Ace_Attorney
  
