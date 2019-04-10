@@ -2,7 +2,7 @@
 [![Build Status](	https://img.shields.io/github/license/:user/:repo.svg)](https://github.com/Th3CracKed/Devops_project/blob/master/LICENSE.txt)
 # Devops_project
 
-**Couverture du code : **
+**Couverture du code :**
 
 Pour vérifier la couverture du code, veuillez vous rendre dans build -> reports -> jacoco 
 
