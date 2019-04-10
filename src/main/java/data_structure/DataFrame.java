@@ -1,5 +1,8 @@
 package data_structure;
 
+import utils.CsvParser;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -76,6 +79,24 @@ public class DataFrame{
         indexes=mIndexes;
         labels=mLabels;
 
+    }
+
+    /**
+     *Constructeur permettant de parser un fichier .csv en DataFrame
+     * @param csv_filename Le nom du fichier CSV à transformer en dataframe
+     */
+    public DataFrame(String csv_filename){
+        CsvParser myParser = new CsvParser(csv_filename);
+        indexes= myParser.getIndexes();
+        labels=myParser.getLabels();
+        columns=myParser.getColumns();
+        if(labels.size() != columns.size())
+            throw new IllegalArgumentException("Le nombre de label doit-etre egale au nombre de colonnes");
+        for (Column col : columns) {
+            if(indexes.size() != col.numberOfCells()) {
+                throw new IllegalArgumentException("Le nombre d'indices doit-etre egale à la taille de colonnes");
+            }
+        }
     }
 
     /**

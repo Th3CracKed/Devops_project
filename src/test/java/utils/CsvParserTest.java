@@ -19,92 +19,53 @@ public class CsvParserTest {
     private CsvParser myParser;
     @Test
     public void testAvecIndex() {
-        try {
-            myParser = new CsvParser("rsc/csv_examples/test.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        DataFrame dataframe = new DataFrame("rsc/csv_examples/test.csv");
         assertNotEquals(null,dataframe);
     }
 
     @Test
     public void testSansIndex() {
-        try {
-            myParser = new CsvParser("rsc/csv_examples/test_sans_index.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        DataFrame dataframe = new DataFrame("rsc/csv_examples/test_sans_index.csv");
         assertNotEquals(null,dataframe);
 
     }
 
     @Test
     public void testDouble() {
-        try {
-            myParser = new CsvParser("rsc/csv_examples/test_avec_float.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        DataFrame dataframe = new DataFrame("rsc/csv_examples/test_avec_float.csv");
         assertNotEquals(null,dataframe);
 
     }
 
     @Test
     public void testInt() {
-        try {
-            myParser = new CsvParser("rsc/csv_examples/test_avec_int.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        DataFrame dataframe = new DataFrame("rsc/csv_examples/test_avec_int.csv");
         assertNotEquals(null,dataframe);
 
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void test_index_en_trop(){
-        try {
-            myParser = new CsvParser("rsc/csv_examples/test_erreur_index.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        DataFrame dataframe = new DataFrame("rsc/csv_examples/test_erreur_index.csv");
         assertNotEquals(null,dataframe);
     }
 
     @Test
     public void getLabels() {
-        try {
-            myParser = new CsvParser("rsc/csv_examples/test_basic.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+
+        DataFrame dataframe = new DataFrame("rsc/csv_examples/test_basic.csv");
         assertEquals(dataframe.getLabels(),dataFrameTest.getLabels());
     }
 
     @Test
     public void getIndexes() {
-        try {
-            myParser = new CsvParser("rsc/csv_examples/test_basic.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        DataFrame dataframe = new DataFrame("rsc/csv_examples/test_basic.csv");
         assertEquals(dataframe.getIndexes(),dataFrameTest.getIndexes());
     }
 
     @Test
     public void getColumns() {
-        try {
-            myParser = new CsvParser("rsc/csv_examples/test_basic.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        DataFrame dataframe = new DataFrame("rsc/csv_examples/test_basic.csv");
         assertEquals(dataframe.getColumns().size(),dataFrameTest.getColumns().size());
     }
 }

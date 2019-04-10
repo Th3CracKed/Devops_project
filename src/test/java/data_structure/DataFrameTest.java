@@ -1,7 +1,9 @@
 package data_structure;
 
 import org.junit.Test;
+import utils.CsvParser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +17,8 @@ public class DataFrameTest {
 
     private String[] mLabels = new String[]{"A", "B", "C"};
 
+    private CsvParser myParser;
+
     private DataFrame dataFrame = new DataFrame(mIndexes, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
 
     @Test
@@ -23,9 +27,22 @@ public class DataFrameTest {
     }
 
     @Test
-    public void testContructor2(){
-        assertNotEquals(null,dataFrame);
+    public void testConstructor2() {
+        try {
+            myParser = new CsvParser("rsc/csv_examples/test.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        assertNotEquals(null,dataframe);
     }
+
+    @Test
+    public void testConstructor3() {
+        DataFrame dataframe = new DataFrame("rsc/csv_examples/test.csv");
+        assertNotEquals(null,dataframe);
+    }
+
 
     @Test
     public void testIndexs(){
