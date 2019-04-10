@@ -10,12 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/* ex
-      A B C
-1 Test1 2 2
-2 Test2 5 5
-3 test3 6 6
- */
 
 /**
  * La classe permettant de parser un CSV, indépendante de Dataframe.
@@ -44,8 +38,6 @@ public class CsvParser {
 
         records.remove(records.size()-1); // dernier element qui est vide
 
-        //System.out.println(records);
-
         /* Recuperation des labels*/
         labels= records.get(0);
         if(labels.get(0).equals("Index")){
@@ -57,6 +49,8 @@ public class CsvParser {
             columns.add(new Column(new ArrayList<String>()));
         }
         for(int i=0;i<records.size();i++){
+
+            /* Recuperation des indexes (s'ils existent) */
             if(containsIndex){
                 indexes.add(records.get(i).get(0));
                 records.get(i).remove(0);
@@ -64,23 +58,24 @@ public class CsvParser {
             else{
                 indexes.add(""+i);
             }
+            /* ========================================== */
+
+            /* Boucle d'ajout des colonnes */
             for(int j=0;j<labels.size();j++){
                 double f;
                 String val = records.get(i).get(j);
                 try {
-                    f = Double.valueOf(val.trim()).floatValue();
-                    if(f-Math.round(f)<=0){
+                    f = Double.valueOf(val.trim()).floatValue(); /* on vérifie si on peut caster en double*/
+                    if(f-Math.round(f)<=0){ /* si la valeur est un entier on l'ajoute en tant qu'entier*/
                         columns.get(j).add(Math.round(f));
                     }
-                    else{
+                    else{  /* sinon on l'enregistre en tant que double */
                         columns.get(j).add(f);
                     }
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException e) { /* si une erreur est détectée, c'est que la valeur est un string */
                     columns.get(j).add(val);
                 }
-
             }
-
         }
     }
 
