@@ -260,8 +260,12 @@ public class DataFrame{
      * @param axis 0 Calcule la somme de chaque colonne(affichage par colonne), 1 Calcule la somme de chaque ligne (affichage par ligne)
      * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
      * @return liste des sommes
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
      */
     public List <Double> sum(int axis, boolean skipNa){
+        if(axis != 1 && axis !=0 )
+            throw new IllegalArgumentException("Il faut passer 0 ou 1 comme axis");
+
         List <Double> results = new ArrayList<>();
         if(axis == 0){
             for (Column column : columns) {
@@ -271,7 +275,7 @@ public class DataFrame{
                 }
                 results.add(columnSum);
             }
-        }else if(axis == 1){
+        }else {
             for(int i = 0; i < indexes.size(); i++) {
                 double columnSum = 0;
                 for (Column column : columns) {
@@ -329,8 +333,12 @@ public class DataFrame{
      * @param axis 0 Calcule la moyenne de chaque colonne(affichage par colonne), 1 Calcule la moyenne de chaque ligne (affichage par ligne)
      * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
      * @return liste des moyens
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
      */
     public List <Double> avg(int axis, boolean skipNa){
+        if(axis != 1 && axis !=0 )
+            throw new IllegalArgumentException("Il faut passer 0 ou 1 comme axis");
+
         List <Double> results = new ArrayList<>();
         if(axis == 0){
             for (Column column : columns) {
@@ -340,7 +348,7 @@ public class DataFrame{
                 }
                 results.add(columnSum / column.getCells().size());
             }
-        }else if(axis == 1){
+        }else {
             for(int i = 0; i < indexes.size(); i++) {
                 double columnSum = 0;
                 for (Column column : columns) {
@@ -375,8 +383,11 @@ public class DataFrame{
      * @param axis 0 Calcule le min de chaque colonne(affichage par colonne), 1 trouve le min de chaque ligne (affichage par ligne)
      * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
      * @return liste des mins
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
      */
     public List<Double> min(int axis, boolean skipNa) {
+        if(axis != 1 && axis !=0 )
+            throw new IllegalArgumentException("Il faut passer 0 ou 1 comme axis");
         List <Double> results = new ArrayList<>();
         if(axis == 0){
             for (Column column : columns) {
@@ -386,7 +397,7 @@ public class DataFrame{
                 }
                 results.add(currentMin);
             }
-        }else if(axis == 1){
+        }else {
             for(int i = 0; i < indexes.size(); i++) {
                 double currentMin = Double.MAX_VALUE;
                 for (Column column : columns) {
@@ -444,8 +455,11 @@ public class DataFrame{
      * @param axis 0 Calcule le max de chaque colonne(affichage par colonne), 1 trouve le max de chaque ligne (affichage par ligne)
      * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
      * @return liste des maxs
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
      */
     public List<Double> max(int axis, boolean skipNa) {
+        if(axis != 1 && axis !=0 )
+            throw new IllegalArgumentException("Il faut passer 0 ou 1 comme axis");
         List <Double> results = new ArrayList<>();
         if(axis == 0){
             for (Column column : columns) {
@@ -455,7 +469,7 @@ public class DataFrame{
                 }
                 results.add(currentMax);
             }
-        }else if(axis == 1){
+        }else {
             for(int i = 0; i < indexes.size(); i++) {
                 double currentMax = Double.MIN_VALUE;
                 for (Column column : columns) {

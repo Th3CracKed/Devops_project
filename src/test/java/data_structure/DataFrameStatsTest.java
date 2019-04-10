@@ -34,6 +34,11 @@ public class DataFrameStatsTest {
                 expectedList,dataFrame.sum(1,false));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void test_sum_Illegal_Argument(){
+        dataFrame.sum(2,false);
+    }
+
     @Test
     public void test_min(){
         List<Double> expectedList = Arrays.asList(23.5,-5.0,12.1);//min des colonnes
@@ -50,6 +55,11 @@ public class DataFrameStatsTest {
     public void test_min_skipna_false(){
         List<Double> expectedList = Arrays.asList(2.0, -5.0, Double.parseDouble("NaN"), Double.parseDouble("NaN"));//min des lignes
         assertEqualsDoublesList("Le minimum attendu pour chaque ligne n'est pas correcte",expectedList,dataFrame.min(1,false));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_min_Illegal_Argument(){
+        dataFrame.min(2,false);
     }
 
     @Test
@@ -70,6 +80,11 @@ public class DataFrameStatsTest {
         assertEqualsDoublesList("Le maximum attendu pour chaque ligne n'est pas correcte",expectedList,dataFrame.max(1,false));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void test_max_Illegal_Argument(){
+        dataFrame.max(2,false);
+    }
+
     @Test
     public void test_avg(){
         List<Double> expectedList = Arrays.asList(19.425,0.5,97.875);//moyenne des colonnes
@@ -86,6 +101,11 @@ public class DataFrameStatsTest {
     public void test_avg_skipna_false(){
         List<Double> expectedList = Arrays.asList(90.233, 20.466, Double.parseDouble("NaN"), Double.parseDouble("NaN"));//moyenne des lignes
         assertEqualsDoublesList("La moyenne attendu pour chaque ligne n'est pas correcte",expectedList,dataFrame.avg(1,false));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_avg_Illegal_Argument(){
+        dataFrame.avg(2,false);
     }
 
     private void assertEqualsDoublesList(String message, List<Double> expected, List<Double> actual){
