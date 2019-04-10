@@ -1,10 +1,12 @@
 [![Build Status](https://travis-ci.com/Th3CracKed/Devops_project.svg?token=Ua5Bde4zpdwh2oEzqAWq&branch=master)](https://travis-ci.com/Th3CracKed/Devops_project)
 [![Build Status](	https://img.shields.io/github/license/:user/:repo.svg)](https://github.com/Th3CracKed/Devops_project/blob/master/LICENSE.txt)
 # Devops_project
-Couverture du code dans build -> reports -> jacoco 
 
-Tests : 
-Pour pouvoir tester les methodes privées, au début on a utilisé Java reflection mais le problème est que si on fait un refactoring de la méthode utilisée, il faut penser a changer ça dans les tests.
+**Couverture du code**
+Pour vérifier la couverture du code, veuillez vous rendre dans build -> reports -> jacoco 
+
+**Tests**
+Pour pouvoir tester les méthodes privées, nous avons au débur utilisé Java reflection mais le problème est que si on fait un refactoring de la méthode utilisée, il faut penser a changer ça dans les tests.
 On a donc utilisé le framework Manifold qui permet d'enrichir java avec plein de nouvelles fonctionnalités.
 
 **Feedback :**   
@@ -17,30 +19,31 @@ before_install:
  -chmod +x gradlew
  
  **Information sur le parser de fichiers .csv :**  
- - Les éléments doivent être séparés par des virgules.
- Voici un exemple simple de fichier .csv :
-Nom,Prenom,Pseudo,Age
+  - Les éléments doivent être séparés par des virgules.
+  Voici un exemple simple de fichier .csv :
 
-Tommy,Sulivan,Kurapika,12
+ Nom,Prenom,Pseudo,Age
 
-Younes,Leboss,fayherinn,52
+ Tommy,Sulivan,Kurapika,12
 
-Isabella,Ray,thePNeverland,45
+ Younes,Leboss,fayherinn,52
 
-Phoenix,Right,Ace_Attorney,21
+ Isabella,Ray,thePNeverland,45
 
-Ce fichier ne précise pas de colonne d'index, les indexes seront donc automatiquement générés en "0,1,2,3"
+ Phoenix,Right,Ace_Attorney,21
 
-Autrement, on peut préciser le nom des indexes avec la colonne de nom "Index", obligatoirement au début du fichier CSV.
-Cette colonne sera évidemment supprimée pendant le parsing.
+ Ce fichier ne précise pas de colonne d'index, les indexes seront donc automatiquement générés en "0,1,2,3"
 
-Index,Nom,Prenom,Pseudo
+ Autrement, on peut préciser le nom des indexes avec la colonne de nom "Index", obligatoirement au début du fichier CSV.
+ Cette colonne sera évidemment supprimée pendant le parsing.
 
-0,Tommy,Sulivan,Kurapika
+ Index,Nom,Prenom,Pseudo
 
-1,Younes,Leboss,fayherinn
+ 0,Tommy,Sulivan,Kurapika
 
-2,Isabella,Ray,thePNeverland
+ 1,Younes,Leboss,fayherinn
 
-3,Phoenix,Right,Ace_Attorney
+ 2,Isabella,Ray,thePNeverland
+
+ 3,Phoenix,Right,Ace_Attorney
  
