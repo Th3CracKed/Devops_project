@@ -53,38 +53,48 @@ public class DataFrame{
     /**
      * Affiche tout le DataFrame
      */
-    public void printAll(){
-        System.out.println(printCore(indexes.size(),true));
+    public String printAll(){
+        String result = printCore(indexes.size(),true);
+        System.out.println(result);
+        return result;
     }
 
     /**
      * Affiche les premières lignes de DataFrame
      */
-    public void printHead(){
-        System.out.println(printCore(indexes.size()-1,true));
+    public String printHead(){
+        String result = printCore(indexes.size()-1,true);
+        System.out.println(result);
+        return result;
     }
 
     /**
      * Affiche les premières lignes de DataFrame
      * @param nbLines le nombre de lignes à afficher
      */
-    public void printHead(int nbLines){
-        System.out.println(printCore(nbLines,true));
+    public String printHead(int nbLines){
+        String result = printCore(nbLines,true);
+        System.out.println(result);
+        return result;
     }
 
     /**
      * Affiche les dernières lignes de DataFrame
      */
-    public void printTail(){
-        System.out.println(printCore(indexes.size()-1,false));
+    public String printTail(){
+        String result = printCore(indexes.size()-1,false);
+        System.out.println(result);
+        return result;
     }
 
     /**
      * Affiche les dernières lignes de DataFrame
      * @param nbLines le nombre de lignes à afficher
      */
-    public void printTail(int nbLines){
-        System.out.println(printCore(nbLines,false));
+    public String printTail(int nbLines){
+        String result = printCore(nbLines,false);
+        System.out.println(result);
+        return result;
     }
 
     /**
