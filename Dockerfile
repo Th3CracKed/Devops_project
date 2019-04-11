@@ -1,8 +1,20 @@
-FROM fabric8/java-jboss-openjdk8-jdk:1.4.0
+FROM java:8
 
-ENV JAVA_APP_JAR java-container.jar
-ENV AB_OFF true
+ARG GRADLE_VERSION=4.4
+ARG GRADLE_URL=https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip
 
-EXPOSE 8080
+ADD $GRADLE_URL /usr/bin/gradle.zip
 
-ADD target/$JAVA_APP_JAR /deployments/
+WORKDIR /usr/bin
+RUN unzip gradle.zip && \
+ rm gradle.zip && \
+ ln -s gradle-${GRADLE_VERSION} gradle
+
+ENV GRADLE_HOME /usr/bin/gradle
+ENV GRADLE_USER_HOME /cache/gradle
+ENV PATH $PATH:$GRADLE_HOME/bin
+
+VOLUME ["/app", $GRADLE_USER_HOME]
+
+WORKDIR /app
+CMD ["gradle", "--version"]
