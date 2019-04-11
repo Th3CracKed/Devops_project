@@ -1,7 +1,5 @@
-# Use phusion/baseimage as base image.
-FROM debian:buster
-
-LABEL maintainer="Driowyaa@@etu.univ-grenoble-alpes.fr"
+# Pull base image.
+FROM dockerfile/ubuntu
 
 # Install Java.
 RUN \
@@ -12,14 +10,12 @@ RUN \
   rm -rf /var/lib/apt/lists/* && \
   rm -rf /var/cache/oracle-jdk8-installer
 
+
 # Define working directory.
 WORKDIR /data
 
 # Define commonly used JAVA_HOME variable
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
+# Define default command.
+CMD ["bash"]
