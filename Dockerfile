@@ -1,5 +1,5 @@
 # Use phusion/baseimage as base image.
-FROM ubuntu
+FROM debian:buster
 
 LABEL maintainer="Driowyaa@@etu.univ-grenoble-alpes.fr"
 
