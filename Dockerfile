@@ -1,20 +1,14 @@
 FROM java:8
 
-ARG GRADLE_VERSION=4.4
-ARG GRADLE_URL=https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip
+ARG PROJECT_NAME=Devops_project
 
-ADD $GRADLE_URL /usr/bin/gradle.zip
+COPY . /${PROJECT_NAME}
 
-WORKDIR /usr/bin
-RUN unzip gradle.zip && \
- rm gradle.zip && \
- ln -s gradle-${GRADLE_VERSION} gradle
+RUN cd /${PROJECT_NAME} && ./gradlew clean && \
+    cd /${PROJECT_NAME} && ./gradlew build
 
-ENV GRADLE_HOME /usr/bin/gradle
-ENV GRADLE_USER_HOME /cache/gradle
-ENV PATH $PATH:$GRADLE_HOME/bin
+RUN cp ${PROJECT_NAME}/build/libs/${PROJECT_NAME}-1.0.jar ${PROJECT_NAME}-1.0.jar
 
-VOLUME ["/app", $GRADLE_USER_HOME]
-
-WORKDIR /app
-CMD ["gradle", "--version"]
+#Comment CMD and uncomment ENTRYPOINT to run Main directly After
+#ENTRYPOINT ["java","-jar","/Devops_project-1.0.jar"]
+CMD ["/bin/bash"]

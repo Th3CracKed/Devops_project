@@ -24,6 +24,8 @@ ou  ajouter dans le fichier de configuration de travis la règle suivante :
 before_install:  
  -chmod +x gradlew
  
+ 2- Pour créer un jar file il faut spécifier le fichier java d'entrée et inclure tout les bibliothèques (fat jar)
+ 
  **Information sur le parser de fichiers .csv :**  
   - Les éléments doivent être séparés par des virgules.
   Voici un exemple simple de fichier .csv :
@@ -56,9 +58,13 @@ before_install:
  **Docker :**
  
  https://hub.docker.com/r/th3cracked/devops_project/
- On a utiliser docker hub avec une version minimal de Ubuntu, modifier spécialement pour Docker  https://github.com/phusion/baseimage-docker
- 
- L'installation de java est effectuer directement depuis le Dockerfile (on pouvait passer par un script.sh)
- On a avait trouver aussi une image avec java8 préinstaller https://hub.docker.com/r/anapsix/alpine-java/
+On a utiliser une image docker avec java preinstaller, dans le Dockerfile on build l'application.
+Pour dérouler un scénario :
+docker run -it th3cracked/devops_project
+java -jar /Devops_project-1.0.jar
+On pouvait créer directement une image docker qui lance le scénario (voir le commentaire Dockerfile)
+
+Pour lancer les tests : 
+cd Devops_project && ./gradlew test
  
  
