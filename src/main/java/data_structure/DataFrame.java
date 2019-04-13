@@ -2,6 +2,7 @@ package data_structure;
 
 import utils.CsvParser;
 
+import javax.lang.model.element.Element;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -530,7 +531,6 @@ public class DataFrame{
 
 
 
-
     public DataFrame groupBy(String column_name){
         int nb =-1;
         for (int i=0;i<labels.size();i++) {
@@ -544,7 +544,7 @@ public class DataFrame{
         for (int i = 0; i < list.size(); i++) {
             for (int j = i+1; j < list.size(); j++) {
                 if(list.get(i).equals(list.get(j))){
-                    System.out.print("TESTO");
+
                 }
             }
         }

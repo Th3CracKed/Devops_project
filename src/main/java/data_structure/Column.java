@@ -60,4 +60,15 @@ public class Column<E> {
     public String toString(){
         return cells.toString();
     }
+
+    /**
+     * Permet de savoir si un élément est contenu dans la colonne
+     * @param element l'élément à rechercher
+     * @return un booléen qui renvoi true si l'élément est dans la colonne
+     */
+    public boolean contains(E element){
+        if(cells.contains(element))
+            return true;
+        return false;
+    }
 }
