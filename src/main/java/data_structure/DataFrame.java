@@ -2,10 +2,8 @@ package data_structure;
 
 import utils.CsvParser;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DataFrame{
 
@@ -530,6 +528,33 @@ public class DataFrame{
         return results;
     }
 
+
+
+
+    public DataFrame groupBy(String column_name){
+        int nb =-1;
+        for (int i=0;i<labels.size();i++) {
+            if (labels.get(i).equals(column_name))
+                nb = i;
+        }
+        if (nb==-1) return null;
+        ArrayList<Column> cols = new ArrayList<>(columns);
+        Column the_col = cols.get(nb);
+        ArrayList  list = new ArrayList(the_col.getCells());
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i+1; j < list.size(); j++) {
+                if(list.get(i).equals(list.get(j))){
+                    System.out.print("TESTO");
+                }
+            }
+        }
+
+        return null;
+    }
+
+
+
+
     /**
      *
      * @param currentMax le maximum courrant
@@ -551,6 +576,8 @@ public class DataFrame{
         }
         return currentMax;
     }
+
+
 
 
     /**

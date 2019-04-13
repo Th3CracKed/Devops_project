@@ -68,4 +68,13 @@ public class CsvParserTest {
         DataFrame dataframe = new DataFrame("rsc/csv_examples/test_basic.csv");
         assertEquals(dataframe.getColumns().size(),dataFrameTest.getColumns().size());
     }
+
+    /*
+    @Test
+    public void sum() {
+        DataFrame dataframe = new DataFrame("rsc/csv_examples/sum_liste_courses.csv");
+        dataframe.printAll();
+        dataframe.groupBy("client_name");
+    }
+    */
 }
