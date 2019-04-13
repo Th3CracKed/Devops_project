@@ -1,5 +1,6 @@
 package data_structure;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,4 +72,15 @@ public class Column<E> {
             return true;
         return false;
     }
+
+    public List<Integer> findAll(E obj) {
+        final List<Integer> indexList = new ArrayList<>();
+        for (int i = 0; i < cells.size(); i++) {
+            if (obj.equals(cells.get(i))) {
+                indexList.add(i);
+            }
+        }
+        return indexList;
+    }
+
 }

@@ -532,23 +532,26 @@ public class DataFrame{
 
 
     public DataFrame groupBy(String column_name){
+        /* Detection de la colonne  */
         int nb =-1;
         for (int i=0;i<labels.size();i++) {
             if (labels.get(i).equals(column_name))
                 nb = i;
         }
         if (nb==-1) return null;
-        ArrayList<Column> cols = new ArrayList<>(columns);
-        Column the_col = cols.get(nb);
-        ArrayList  list = new ArrayList(the_col.getCells());
-        for (int i = 0; i < list.size(); i++) {
-            for (int j = i+1; j < list.size(); j++) {
-                if(list.get(i).equals(list.get(j))){
 
-                }
-            }
+        /* Debut du group by */
+        ArrayList<Column> cols = new ArrayList<>(); // creation des nouvelles colonnes
+        for (int i=0;i<columns.size();i++){
+            cols.add(new Column(new ArrayList()));
         }
 
+        Column the_col = columns.get(nb);
+        ArrayList  list = new ArrayList(the_col.getCells());
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(the_col.findAll(list.get(i)));
+
+        }
         return null;
     }
 
