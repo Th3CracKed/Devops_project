@@ -73,6 +73,11 @@ public class Column<E> {
         return false;
     }
 
+    /**
+     * Trouver toutes les occurences d'un objet
+     * @param obj l'objet à trouver
+     * @return Renvoi une liste des positions des occurences trouvées dans la colonne
+     */
     public List<Integer> findAll(E obj) {
         final List<Integer> indexList = new ArrayList<>();
         for (int i = 0; i < cells.size(); i++) {
