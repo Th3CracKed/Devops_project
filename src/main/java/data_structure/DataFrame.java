@@ -548,10 +548,20 @@ public class DataFrame{
 
         Column the_col = columns.get(nb);
         ArrayList  list = new ArrayList(the_col.getCells());
+        HashMap<Integer,List<Integer>> correspondance = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(the_col.findAll(list.get(i)));
+            List<Integer> redondances = the_col.findAll(list.get(i));
+            for (Integer ind:redondances) {
+                if(correspondance.containsKey(ind)){
+                    break;
+                }
+                else
+                correspondance.put(i,redondances);
+
+            }
 
         }
+        System.out.println(correspondance);
         return null;
     }
 
