@@ -530,8 +530,12 @@ public class DataFrame{
     }
 
 
-
-    public DataFrame groupBy(String column_name){
+    /**
+     * Effectue une somme des lignes identiques en fonction du nom d'une colonne
+     * @param column_name Le nom de la colonne sur laquelle on va chercher les occurences
+     * @return le nouveau DataFrame contenant les nouvelles lignes sommées
+     */
+    public DataFrame groupBySum(String column_name){
         /* Detection de la colonne  */
         int nb =-1;
         for (int i=0;i<labels.size();i++) {
@@ -541,10 +545,7 @@ public class DataFrame{
         if (nb==-1) return null;
 
         /* Debut du group by */
-        ArrayList<Column> cols = new ArrayList<>(); // creation des nouvelles colonnes
-        for (int i=0;i<columns.size();i++){
-            cols.add(new Column(new ArrayList()));
-        }
+
 
         Column the_col = columns.get(nb);
         ArrayList  list = new ArrayList(the_col.getCells());
@@ -559,10 +560,45 @@ public class DataFrame{
                 correspondance.put(i,redondances);
 
             }
+        }
 
+        ArrayList<Column> cols = new ArrayList<>(); // creation des nouvelles colonnes
+        for (int i=0;i<columns.size();i++){
+            cols.add(new Column(new ArrayList()));
         }
         System.out.println(correspondance);
-        return null;
+        for(Map.Entry<Integer, List<Integer>> entry : correspondance.entrySet()) {
+            int key = entry.getKey();
+            List<Integer> value = entry.getValue();
+            cols.get(nb).add(the_col.getCells().get(key));
+            System.out.println(cols.get(nb));
+            for(int i=0;i<columns.size();i++){
+                Double e= 0.0;
+                String e2 ="";
+                boolean isString = false;
+                if(i!=nb)
+                {
+                    for(int ind : value){
+                        if(String.valueOf(columns.get(i).getCells().get(ind)).equals(columns.get(i).getCells().get(ind))){
+                            isString=true;
+                            e2+=" "+columns.get(i).getCells().get(ind);
+                        }
+                        else e+=  Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind)));
+                    }
+                    if(isString)
+                        cols.get(i).add(e2);
+                    else cols.get(i).add(e);
+                }
+
+
+            }
+
+        }
+        List<String> new_indexes = new ArrayList<>(indexes);
+        while(new_indexes.size()!=cols.get(0).getCells().size()){
+            new_indexes.remove(new_indexes.size()-1);
+        }
+        return new DataFrame(new_indexes,labels,cols);
     }
 
 

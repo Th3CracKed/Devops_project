@@ -57,6 +57,7 @@ public class Column<E> {
         cells.add(element);
     }
 
+
     @Override
     public String toString(){
         return cells.toString();
