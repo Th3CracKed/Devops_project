@@ -95,6 +95,9 @@ public class DataFrameTest {
     public void groupByAgregate() {
         DataFrame dataframe = new DataFrame("rsc/csv_examples/sum_liste_courses.csv");
         DataFrame d2 = dataframe.groupByAgregate("client_name","min");
+        DataFrame d3 = dataframe.groupByAgregate("client_name","max");
+        DataFrame d4 = dataframe.groupByAgregate("client_name","sum");
+        DataFrame d5 = dataframe.groupByAgregate("client_name","prod");
         assertEquals("Probleme dans le groupBy",d2.getColumns().get(2).getCells().get(0),25.0);
         assertEquals("Probleme dans le groupBy",d2.getColumns().get(2).getCells().get(1),20.0);
 
