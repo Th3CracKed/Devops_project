@@ -531,11 +531,12 @@ public class DataFrame{
 
 
     /**
-     * Effectue une somme des lignes identiques en fonction du nom d'une colonne
+     * Effectue un groupeBy et un Agregate en même temps
      * @param column_name Le nom de la colonne sur laquelle on va chercher les occurences
-     * @return le nouveau DataFrame contenant les nouvelles lignes sommées
+     * @param arg L'argument qui va permettre de savoir ce qu'il faut effectuer comme opération (sum,prod,min,max)
+     * @return le nouveau DataFrame contenant les nouvelles lignes
      */
-    public DataFrame groupBySum(String column_name){
+    public DataFrame groupByAgregate(String column_name,String arg){
         /* Detection de la colonne  */
         int nb =-1;
         for (int i=0;i<labels.size();i++) {
@@ -571,10 +572,11 @@ public class DataFrame{
             int key = entry.getKey();
             List<Integer> value = entry.getValue();
             cols.get(nb).add(the_col.getCells().get(key));
-            System.out.println(cols.get(nb));
+            Double e= 0.0;
+            String e2 ="";
             for(int i=0;i<columns.size();i++){
-                Double e= 0.0;
-                String e2 ="";
+                e=0.0;
+                e2="";
                 boolean isString = false;
                 if(i!=nb)
                 {
@@ -583,7 +585,19 @@ public class DataFrame{
                             isString=true;
                             e2+=" "+columns.get(i).getCells().get(ind);
                         }
-                        else e+=  Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind)));
+                        else{
+                            if(e==0.0){
+                                e=  Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind)));
+                            }
+                            if(arg.equals("sum"))
+                            e+=  Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind)));
+                            else if(arg.equals("prod"))
+                                e*=  Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind)));
+                            else if(arg.equals("min"))
+                                e =  Double.min(Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind))),e);
+                            else if(arg.equals("max"))
+                                e =  Double.max(Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind))),e);
+                        }
                     }
                     if(isString)
                         cols.get(i).add(e2);
