@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataFrame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Devops_project</a> &gt; <a href="index.source.html" class="el_package">data_structure</a> &gt; <span class="el_source">DataFrame.java</span></div><h1>DataFrame.java</h1><pre class="source lang-java linenums">package data_structure;
+
+import utils.CsvParser;
+
+import java.io.IOException;
+import java.util.*;
+
+public class DataFrame{
+
+    /**
+     * List d'identifiant de lignes
+     */
+<span class="fc" id="L13">    private List&lt;String&gt; indexes = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * Liste d'identifiant de colonnes
+     */
+<span class="fc" id="L18">    private List&lt;String&gt; labels = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * List de colonnes, la classe contient un label pour identifier
+     *
+     */
+<span class="fc" id="L24">    private List &lt;Column&gt; columns = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * Constructeur prenant en paramÃ¨tre le contenu de chaque colonne sous forme dâ€™une List
+     * Le nombres d'indices doit Ãªtre Ã©gale aux nombres de cellules dans chaque colonnes
+     * Le nombres de labels doit Ãªtre Ã©gale aux nombres de colonnes
+     * @param mIndexes liste d'identifiants de lignes
+     * @param mLabels liste de labels de colonnes
+     * @param columnsCells liste de contenu des colonnes
+     * @throws NullPointerException Si l'une des lists specifier est null
+     * @throws IllegalArgumentException Si la taille de donnÃ©es n'est pas cohÃ©rente
+     */
+<span class="fc" id="L36">    public DataFrame(String[] mIndexes, String[] mLabels, List&lt;?&gt;... columnsCells){</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if(mLabels.length != columnsCells.length )</span>
+<span class="fc" id="L38">            throw new IllegalArgumentException(&quot;Le nombre de labels doit-etre egale au nombre de colonnes&quot;);</span>
+
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (List&lt;?&gt; cells : columnsCells) {</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            if(mIndexes.length != cells.size()) {</span>
+<span class="fc" id="L42">                throw new IllegalArgumentException(&quot;Le nombre d'indices doit-etre egale a la taille de colonnes&quot;);</span>
+            }else{
+<span class="fc" id="L44">                columns.add(new Column&lt;&gt;(cells));</span>
+            }
+        }
+
+<span class="fc" id="L48">        Collections.addAll(indexes, mIndexes);</span>
+<span class="fc" id="L49">        Collections.addAll(labels, mLabels);</span>
+
+<span class="fc" id="L51">    }</span>
+
+
+    /**
+     * Constructeur prenant en paramÃ¨tre le contenu de chaque colonne sous forme dâ€™une List
+     * Le nombres d'indices doit Ãªtre Ã©gale aux nombres de cellules dans chaque colonnes
+     * Le nombres de labels doit Ãªtre Ã©gale aux nombres de colonnes
+     * @param mIndexes liste d'identifiants de lignes
+     * @param mLabels liste de labels de colonnes
+     * @param columnsCells liste de colonnes
+     * @throws NullPointerException Si l'une des lists specifiÃ©e vaut null
+     * @throws IllegalArgumentException Si la taille de donnÃ©es n'est pas cohÃ©rente
+     */
+<span class="fc" id="L64">    public DataFrame(List&lt;String&gt; mIndexes, List&lt;String&gt; mLabels, List&lt;Column&gt; columnsCells){</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if(mLabels.size() != columnsCells.size())</span>
+<span class="fc" id="L66">            throw new IllegalArgumentException(&quot;Le nombre de label doit-etre egale au nombre de colonnes&quot;);</span>
+
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (Column col : columnsCells) {</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">            if(mIndexes.size() != col.numberOfCells()) {</span>
+<span class="fc" id="L70">                throw new IllegalArgumentException(&quot;Le nombre d'indices doit-etre egale Ã  la taille de colonnes&quot;);</span>
+            }else{
+<span class="fc" id="L72">                columns.add(col);</span>
+            }
+<span class="fc" id="L74">        }</span>
+
+<span class="fc" id="L76">        indexes = mIndexes;</span>
+<span class="fc" id="L77">        labels = mLabels;</span>
+
+<span class="fc" id="L79">    }</span>
+
+    /**
+     *Constructeur permettant de parser un fichier .csv en DataFrame
+     * @param csv_filename Le nom du fichier CSV Ã  transformer en dataframe
+     */
+<span class="fc" id="L85">    public DataFrame(String csv_filename) throws IOException {</span>
+<span class="fc" id="L86">        CsvParser myParser = new CsvParser(csv_filename);</span>
+<span class="fc" id="L87">        indexes = myParser.getIndexes();</span>
+<span class="fc" id="L88">        labels = myParser.getLabels();</span>
+<span class="fc" id="L89">        columns = myParser.getColumns();</span>
+
+<span class="fc" id="L91">    }</span>
+
+    /**
+     * Constructeur permettant de parser un fichier .csv en DataFrame
+     * Ce constrcteur est redundant et permet d'experimenter avec dependency injection (Dagger2)
+     * @param myParser Le parseur du fichier CSV Ã  transformer en dataframe
+     */
+<span class="fc" id="L98">    public DataFrame(CsvParser myParser){</span>
+<span class="fc" id="L99">        indexes = myParser.getIndexes();</span>
+<span class="fc" id="L100">        labels = myParser.getLabels();</span>
+<span class="fc" id="L101">        columns = myParser.getColumns();</span>
+<span class="fc" id="L102">    }</span>
+
+    /**
+     * Affiche tout le DataFrame
+     */
+    public String printAll(){
+<span class="fc" id="L108">        return printCore(indexes.size(),true);</span>
+    }
+
+    /**
+     * Affiche les premiÃ¨res lignes de DataFrame
+     */
+    public String printHead(){
+<span class="fc" id="L115">        return printCore(indexes.size()-1,true);</span>
+    }
+
+    /**
+     * Affiche les premiÃ¨res lignes de DataFrame
+     * @param nbLines le nombre de lignes Ã  afficher
+     */
+    public String printHead(int nbLines){
+<span class="fc" id="L123">        return printCore(nbLines,true);</span>
+    }
+
+    /**
+     * Affiche les derniÃ¨res lignes de DataFrame
+     */
+    public String printTail(){
+<span class="fc" id="L130">        return printCore(indexes.size()-1,false);</span>
+    }
+
+    /**
+     * Affiche les derniÃ¨res lignes de DataFrame
+     * @param nbLines le nombre de lignes Ã  afficher
+     */
+    public String printTail(int nbLines){
+<span class="fc" id="L138">        return printCore(nbLines,false);</span>
+    }
+
+    /**
+     * Prepare une String qui contient le nombre de lignes passer en paramÃ¨tres
+     * Si le nbLines dÃ©passe la taille de tableau, tout le tableau sera afficher
+     * @param nbLines Nombre de lines Ã  afficher
+     * @param head Direction de l'affichage, true les premiÃ¨res lignes , false les derniÃ¨res lignes
+     * @return L'affichage de tout le DataFrame
+     */
+    private String printCore(int nbLines, boolean head){
+
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if(nbLines &lt;= 0)    throw new IllegalArgumentException(&quot;Nombres de lignes doit Ãªtre positif&quot;);</span>
+
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if(nbLines &gt; indexes.size())    nbLines = indexes.size();</span>
+
+        List &lt;String&gt; filteredIndexes;
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if(head){</span>
+<span class="fc" id="L156">            filteredIndexes = indexes.subList(0,nbLines);</span>
+        }else{
+<span class="fc" id="L158">            filteredIndexes = indexes.subList(indexes.size()-nbLines, indexes.size());</span>
+        }
+
+<span class="fc" id="L161">        int indexPadding = findMax(1,filteredIndexes); //Find max length of indexes String</span>
+
+<span class="fc" id="L163">        StringBuilder result = new StringBuilder();</span>
+
+        //Table header
+<span class="fc" id="L166">        result.append(String.format(&quot;%-&quot;+indexPadding+&quot;s&quot;,&quot;&quot;));//add spacing for printing labels</span>
+        // For each (label + column ) find max length, print all labels using as minimum width the max length of (current label, cells list) +1
+<span class="fc" id="L168">        List &lt;Integer&gt; paddingTables = new ArrayList&lt;&gt;();//stores column padding to print the table</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        for(int i = 0; i &lt; labels.size(); i++){</span>
+<span class="fc" id="L170">            int maxPadding = labels.get(i).length();</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">            if(head){</span>
+<span class="fc" id="L172">                maxPadding = findMax(maxPadding,columns.get(i).getCells().subList(0,nbLines));</span>
+            }else{
+<span class="fc" id="L174">                int nbCells = columns.get(i).getCells().size();</span>
+<span class="fc" id="L175">                maxPadding = findMax(maxPadding,columns.get(i).getCells().subList(nbCells-nbLines,nbCells));</span>
+            }
+<span class="fc" id="L177">            result.append(String.format(&quot;%&quot; + (maxPadding+1) + &quot;s&quot;,labels.get(i)));</span>
+<span class="fc" id="L178">            paddingTables.add(maxPadding+1);</span>
+        }
+<span class="fc" id="L180">        result.append(String.format(&quot;%n&quot;));// an empty line</span>
+
+        //Table content
+        //print indexes using as padding the max length of indexes &amp; print all Columns using as minimum width the max length of (current label, cells list) +1
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        for(int i = 0; i &lt; filteredIndexes.size(); i++) {</span>
+<span class="fc" id="L185">            result.append(String.format(&quot;%-&quot;+indexPadding+&quot;s&quot;,filteredIndexes.get(i)));</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">            for(int j = 0; j &lt; columns.size(); j++) {</span>
+<span class="fc" id="L187">                Column column = columns.get(j);</span>
+                Object cell;// get only the cell with current index
+<span class="fc bfc" id="L189" title="All 2 branches covered.">                if(head) {</span>
+<span class="fc" id="L190">                    cell = column.getCells().get(i);</span>
+                }else{
+<span class="fc" id="L192">                    int nbCells = columns.get(i).getCells().size();</span>
+<span class="fc" id="L193">                    cell = column.getCells().subList(nbCells-nbLines,nbCells).get(i);</span>
+                }
+<span class="fc" id="L195">                result.append(String.format(&quot;%&quot;+paddingTables.get(j)+&quot;s&quot;,cell.toString()));//formatted with max width padding</span>
+            }
+<span class="fc" id="L197">            result.append(String.format(&quot;%n&quot;));// an empty line</span>
+        }
+
+<span class="fc" id="L200">        return result.toString();</span>
+    }
+
+    /**
+     * Trouve le maximum entre l'entier et la liste passÃ©e en paramÃ¨tre
+     * @param currentMax la valeur maximum precÃ¨dement trouver
+     * @param objects la liste d'objets Ã  parcourir
+     */
+    private int findMax(int currentMax,List objects){
+<span class="fc bfc" id="L209" title="All 2 branches covered.">        for(Object object : objects){</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">            if(currentMax &lt; object.toString().length())</span>
+<span class="fc" id="L211">                currentMax = object.toString().length();</span>
+<span class="fc" id="L212">        }</span>
+<span class="fc" id="L213">        return currentMax;</span>
+    }
+
+    /**
+     * Cree un nouveau DataFrame en selectionnant les indices passÃ©s en paramÃ¨tre
+     * @param selected_Indexes les lignes Ã  retourner
+     * @return un DataFrame des celulles des lignes passer en paramÃ¨tre
+     * @throws IndexOutOfBoundsException si l'une des indices passÃ© en paramÃ¨tre est en dehors du rang
+     * @throws IllegalArgumentException si aucun paramÃ¨tre n'est passÃ©
+     */
+    public DataFrame iloc(int... selected_Indexes){
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        if(selected_Indexes.length==0)</span>
+<span class="fc" id="L225">            throw new IllegalArgumentException(&quot;Il faut passer au moins un paramÃ¨tre&quot;);</span>
+
+<span class="fc" id="L227">        List &lt;String&gt; mIndexes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L228">        List[] columnsCells = new List[labels.size()];</span>
+
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        for(int index : selected_Indexes){</span>
+<span class="fc" id="L231">            mIndexes.add(indexes.get(index));</span>
+
+<span class="fc" id="L233">            int columnIndex = 0;</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">            for(Column column : columns) {</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">                if(columnsCells[columnIndex]==null){</span>
+<span class="fc" id="L236">                    columnsCells[columnIndex] = new ArrayList();</span>
+                }
+<span class="fc" id="L238">                columnsCells[columnIndex].add(column.getCells().get(index));</span>
+<span class="fc" id="L239">                columnIndex++;</span>
+<span class="fc" id="L240">            }</span>
+
+        }
+
+<span class="fc" id="L244">        return new DataFrame(mIndexes.toArray(new String[0]),labels.toArray(new String[0]), columnsCells);</span>
+    }
+
+    /**
+     * Cree un nouveau DataFrame en selectionnant les labels passÃ©s en paramÃ¨tre
+     * si un label n'est pas trouvÃ©, retourne des colonnes avec la valeur 'NaN'
+     * @param selected_Labels les colonnes Ã  retourner
+     * @return un DataFrame Ã  partir des colonnes passeÃ©s en paramÃ¨tre
+     * @throws IllegalArgumentException si aucun paramÃ¨tre n'est passÃ©
+     */
+    public DataFrame loc(String... selected_Labels){
+<span class="fc bfc" id="L255" title="All 2 branches covered.">        if(selected_Labels.length==0)</span>
+<span class="fc" id="L256">            throw new IllegalArgumentException(&quot;Il faut passer au moins un paramÃ¨tre&quot;);</span>
+
+<span class="fc" id="L258">        List &lt;String&gt; mIndexes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L259">        List[] columnsCells = new List[labels.size()];</span>
+
+<span class="fc bfc" id="L261" title="All 2 branches covered.">        for(String label : selected_Labels){</span>
+<span class="fc" id="L262">            mIndexes.add(label);</span>
+<span class="fc" id="L263">            int index = indexes.indexOf(label);</span>
+<span class="fc" id="L264">            int columnIndex = 0;</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">            for(Column column : columns) {</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">                if(columnsCells[columnIndex]==null){</span>
+<span class="fc" id="L267">                    columnsCells[columnIndex] = new ArrayList();</span>
+                }
+<span class="fc bfc" id="L269" title="All 2 branches covered.">                if(index!=-1) {</span>
+<span class="fc" id="L270">                    columnsCells[columnIndex].add(column.getCells().get(index));</span>
+                }else{
+<span class="fc" id="L272">                    columnsCells[columnIndex].add(&quot;NaN&quot;);//label not found</span>
+                }
+<span class="fc" id="L274">                columnIndex++;</span>
+<span class="fc" id="L275">            }</span>
+        }
+
+<span class="fc" id="L278">        return new DataFrame(mIndexes.toArray(new String[0]),labels.toArray(new String[0]), columnsCells);</span>
+    }
+
+    /**
+     * Calcule la somme de chaque colonne (affichage par colonne)
+     * @return liste des sommes
+     */
+    public List&lt;Double&gt; sum(){
+<span class="fc" id="L286">        return sum(0);</span>
+    }
+
+    /**
+     * Calcule la somme de l'axis passÃ© en paramÃ¨tre
+     * @param axis 0 Calcule la somme de chaque colonne(affichage par colonne), 1 Calcule la somme de chaque ligne (affichage par ligne)
+     * @return liste des sommes
+     */
+    public List&lt;Double&gt; sum(int axis){
+<span class="fc" id="L295">        return sum(axis,true);</span>
+    }
+
+    /**
+     * Calcule la somme de l'axis passer en paramÃ¨tre
+     *
+     * @param axis 0 Calcule la somme de chaque colonne(affichage par colonne), 1 Calcule la somme de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des sommes
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
+     */
+    public List &lt;Double&gt; sum(int axis, boolean skipNa){
+<span class="fc bfc" id="L307" title="All 4 branches covered.">        if(axis != 1 &amp;&amp; axis !=0 )</span>
+<span class="fc" id="L308">            throw new IllegalArgumentException(&quot;Il faut passer 0 ou 1 comme axis&quot;);</span>
+
+<span class="fc" id="L310">        List &lt;Double&gt; results = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">        if(axis == 0){</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">            for (Column column : columns) {</span>
+<span class="fc" id="L313">                double  columnSum = 0;</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">                for (Object cell : column.getCells()) {</span>
+<span class="fc" id="L315">                    columnSum = sumCore(columnSum,cell,skipNa);</span>
+<span class="fc" id="L316">                }</span>
+<span class="fc" id="L317">                results.add(columnSum);</span>
+<span class="fc" id="L318">            }</span>
+        }else {
+<span class="fc bfc" id="L320" title="All 2 branches covered.">            for(int i = 0; i &lt; indexes.size(); i++) {</span>
+<span class="fc" id="L321">                double columnSum = 0;</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">                for (Column column : columns) {</span>
+<span class="fc" id="L323">                    Object cell = column.getCells().get(i);</span>
+<span class="fc" id="L324">                    columnSum = sumCore(columnSum,cell,skipNa);</span>
+<span class="fc" id="L325">                }</span>
+<span class="fc" id="L326">                results.add(columnSum);</span>
+            }
+        }
+<span class="fc" id="L329">        return results;</span>
+    }
+
+    /**
+     * calcule la somme courrante
+     * @param columnSum la somme courrante
+     * @param cell la valeur de la celulle courante
+     * @param skipNa ignore les valeurs null ou non
+     * @return la somme avec la cellule courrante
+     */
+    private double sumCore(double columnSum, Object cell, boolean skipNa) {
+        try {
+            //handle case when cell's value is 'NaN' which is treated as legit double value
+<span class="fc bfc" id="L342" title="All 4 branches covered.">            if(skipNa &amp;&amp; Double.isNaN(Double.parseDouble(String.valueOf(cell)) )){</span>
+<span class="fc" id="L343">                return columnSum;</span>
+            }
+<span class="fc" id="L345">            columnSum += Double.parseDouble(String.valueOf(cell));</span>
+<span class="fc" id="L346">        }catch (NumberFormatException n){</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">            if(!skipNa){</span>
+<span class="fc" id="L348">                columnSum += Double.parseDouble(&quot;NaN&quot;);//Sum of this column is NaN</span>
+            }
+<span class="fc" id="L350">        }</span>
+<span class="fc" id="L351">        return columnSum;</span>
+    }
+
+    /**
+     * Calcule la moyenne de chaque colonne (affichage par colonne)
+     * @return liste des moyens
+     */
+    public List&lt;Double&gt; avg(){
+<span class="fc" id="L359">        return avg(0);</span>
+    }
+
+    /**
+     * Calcule la moyenne de l'axis passer en paramÃ¨tre
+     * @param axis 0 Calcule la moyenne de chaque colonne(affichage par colonne), 1 Calcule la moyenne de chaque ligne (affichage par ligne)
+     * @return liste des moyens
+     */
+    public List&lt;Double&gt; avg(int axis){
+<span class="fc" id="L368">        return avg(axis,true);</span>
+    }
+
+    /**
+     * Calcule la moyenne de l'axis passer en paramÃ¨tre
+     *
+     * @param axis 0 Calcule la moyenne de chaque colonne(affichage par colonne), 1 Calcule la moyenne de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des moyens
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
+     */
+    public List &lt;Double&gt; avg(int axis, boolean skipNa){
+<span class="fc bfc" id="L380" title="All 4 branches covered.">        if(axis != 1 &amp;&amp; axis !=0 )</span>
+<span class="fc" id="L381">            throw new IllegalArgumentException(&quot;Il faut passer 0 ou 1 comme axis&quot;);</span>
+
+<span class="fc" id="L383">        List &lt;Double&gt; results = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L384" title="All 2 branches covered.">        if(axis == 0){</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">            for (Column column : columns) {</span>
+<span class="fc" id="L386">                double  columnSum = 0;</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">                for (Object cell : column.getCells()) {</span>
+<span class="fc" id="L388">                    columnSum = sumCore(columnSum,cell,skipNa);</span>
+<span class="fc" id="L389">                }</span>
+<span class="fc" id="L390">                results.add(columnSum / column.getCells().size());</span>
+<span class="fc" id="L391">            }</span>
+        }else {
+<span class="fc bfc" id="L393" title="All 2 branches covered.">            for(int i = 0; i &lt; indexes.size(); i++) {</span>
+<span class="fc" id="L394">                double columnSum = 0;</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">                for (Column column : columns) {</span>
+<span class="fc" id="L396">                    Object cell = column.getCells().get(i);</span>
+<span class="fc" id="L397">                    columnSum = sumCore(columnSum,cell,skipNa);</span>
+<span class="fc" id="L398">                }</span>
+<span class="fc" id="L399">                results.add(columnSum / columns.size());</span>
+            }
+        }
+<span class="fc" id="L402">        return results;</span>
+    }
+
+    /**
+     * Trouve le minimum de chaque colonne (affichage par colonne)
+     * @return liste des mins
+     */
+    public List&lt;Double&gt; min(){
+<span class="fc" id="L410">        return min(0);</span>
+    }
+
+    /**
+     *
+     * @param axis 0 trouve le min de chaque colonne(affichage par colonne), 1 trouve le min de chaque ligne (affichage par ligne)
+     * @return liste des mins
+     */
+    public List&lt;Double&gt; min(int axis) {
+<span class="fc" id="L419">        return min(axis,true);</span>
+    }
+
+    /**
+     *
+     * @param axis 0 Calcule le min de chaque colonne(affichage par colonne), 1 trouve le min de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des mins
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
+     */
+    public List&lt;Double&gt; min(int axis, boolean skipNa) {
+<span class="fc bfc" id="L430" title="All 4 branches covered.">        if(axis != 1 &amp;&amp; axis !=0 )</span>
+<span class="fc" id="L431">            throw new IllegalArgumentException(&quot;Il faut passer 0 ou 1 comme axis&quot;);</span>
+<span class="fc" id="L432">        List &lt;Double&gt; results = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">        if(axis == 0){</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">            for (Column column : columns) {</span>
+<span class="fc" id="L435">                double currentMin = Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L436" title="All 2 branches covered.">                for (Object cell : column.getCells()) {</span>
+<span class="fc" id="L437">                    currentMin = minCore(currentMin,cell,skipNa);</span>
+<span class="fc" id="L438">                }</span>
+<span class="fc" id="L439">                results.add(currentMin);</span>
+<span class="fc" id="L440">            }</span>
+        }else {
+<span class="fc bfc" id="L442" title="All 2 branches covered.">            for(int i = 0; i &lt; indexes.size(); i++) {</span>
+<span class="fc" id="L443">                double currentMin = Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">                for (Column column : columns) {</span>
+<span class="fc" id="L445">                    Object cell = column.getCells().get(i);</span>
+<span class="fc" id="L446">                    currentMin = minCore(currentMin,cell,skipNa);</span>
+<span class="fc" id="L447">                }</span>
+<span class="fc" id="L448">                results.add(currentMin);</span>
+            }
+        }
+<span class="fc" id="L451">        return results;</span>
+    }
+
+    /**
+     *
+     * @param currentMin le minimum courrant
+     * @param cell la valeur de la celulle courante
+     * @param skipNa ignore les valeurs null ou non
+     * @return le min de toutes les celulles precedentes (la cellule courrante inclus)
+     */
+    private double minCore(double currentMin, Object cell, boolean skipNa) {
+        try {
+            //handle case when cell's value is 'NaN' which is treated as legit double value
+<span class="fc bfc" id="L464" title="All 4 branches covered.">            if(skipNa &amp;&amp; Double.isNaN(Double.parseDouble(String.valueOf(cell))) ){</span>
+<span class="fc" id="L465">                return currentMin;</span>
+            }
+<span class="fc" id="L467">            currentMin = Double.min(currentMin,Double.parseDouble(String.valueOf(cell)));</span>
+<span class="fc" id="L468">        }catch (NumberFormatException n){</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">            if(!skipNa){</span>
+<span class="fc" id="L470">                currentMin = Double.parseDouble(&quot;NaN&quot;);//Sum of this column is NaN</span>
+            }
+<span class="fc" id="L472">        }</span>
+<span class="fc" id="L473">        return currentMin;</span>
+    }
+
+
+    /**
+     * Trouve le maximum de chaque colonne (affichage par colonne)
+     * @return liste des maxs
+     */
+    public List&lt;Double&gt; max(){
+<span class="fc" id="L482">        return max(0);</span>
+    }
+
+    /**
+     *
+     * @param axis 0 trouve le max de chaque colonne(affichage par colonne), 1 trouve le max de chaque ligne (affichage par ligne)
+     * @return liste des maxs
+     */
+    public List&lt;Double&gt; max(int axis) {
+<span class="fc" id="L491">        return max(axis,true);</span>
+    }
+
+    /**
+     *
+     * @param axis 0 Calcule le max de chaque colonne(affichage par colonne), 1 trouve le max de chaque ligne (affichage par ligne)
+     * @param skipNa true eviter les valeurs NaN, false ne pas eviter la somme sera NaN
+     * @return liste des maxs
+     * @throws IllegalArgumentException si le param passer est different de 0 ou 1
+     */
+    public List&lt;Double&gt; max(int axis, boolean skipNa) {
+<span class="fc bfc" id="L502" title="All 4 branches covered.">        if(axis != 1 &amp;&amp; axis !=0 )</span>
+<span class="fc" id="L503">            throw new IllegalArgumentException(&quot;Il faut passer 0 ou 1 comme axis&quot;);</span>
+<span class="fc" id="L504">        List &lt;Double&gt; results = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L505" title="All 2 branches covered.">        if(axis == 0){</span>
+<span class="fc bfc" id="L506" title="All 2 branches covered.">            for (Column column : columns) {</span>
+<span class="fc" id="L507">                double currentMax = Double.MIN_VALUE;</span>
+<span class="fc bfc" id="L508" title="All 2 branches covered.">                for (Object cell : column.getCells()) {</span>
+<span class="fc" id="L509">                    currentMax = maxCore(currentMax,cell,skipNa);</span>
+<span class="fc" id="L510">                }</span>
+<span class="fc" id="L511">                results.add(currentMax);</span>
+<span class="fc" id="L512">            }</span>
+        }else {
+<span class="fc bfc" id="L514" title="All 2 branches covered.">            for(int i = 0; i &lt; indexes.size(); i++) {</span>
+<span class="fc" id="L515">                double currentMax = Double.MIN_VALUE;</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">                for (Column column : columns) {</span>
+<span class="fc" id="L517">                    Object cell = column.getCells().get(i);</span>
+<span class="fc" id="L518">                    currentMax = maxCore(currentMax,cell,skipNa);</span>
+<span class="fc" id="L519">                }</span>
+<span class="fc" id="L520">                results.add(currentMax);</span>
+            }
+        }
+<span class="fc" id="L523">        return results;</span>
+    }
+
+
+    /**
+     * Effectue un groupeBy et un Agregate en mÃªme temps
+     * @param column_name Le nom de la colonne sur laquelle on va chercher les occurences
+     * @param arg L'argument qui va permettre de savoir ce qu'il faut effectuer comme opÃ©ration (sum,prod,min,max)
+     * @return le nouveau DataFrame contenant les nouvelles lignes
+     */
+    public DataFrame groupByAgregate(String column_name,String arg){
+        /* Detection de la colonne  */
+<span class="fc" id="L535">        int nb =-1;</span>
+<span class="fc bfc" id="L536" title="All 2 branches covered.">        for (int i=0;i&lt;labels.size();i++) {</span>
+<span class="fc bfc" id="L537" title="All 2 branches covered.">            if (labels.get(i).equals(column_name))</span>
+<span class="fc" id="L538">                nb = i;</span>
+        }
+<span class="fc bfc" id="L540" title="All 2 branches covered.">        if (nb==-1) return null;</span>
+
+        /* Debut du group by */
+
+
+<span class="fc" id="L545">        Column the_col = columns.get(nb);</span>
+<span class="fc" id="L546">        ArrayList  list = new ArrayList(the_col.getCells());</span>
+<span class="fc" id="L547">        HashMap&lt;Integer,List&lt;Integer&gt;&gt; correspondance = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L548" title="All 2 branches covered.">        for (int i = 0; i &lt; list.size(); i++) {</span>
+<span class="fc" id="L549">            List&lt;Integer&gt; redondances = the_col.findAll(list.get(i));</span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">            for (Integer ind:redondances) {</span>
+<span class="fc bfc" id="L551" title="All 2 branches covered.">                if(correspondance.containsKey(ind)){</span>
+<span class="fc" id="L552">                    break;</span>
+                }
+                else
+<span class="fc" id="L555">                correspondance.put(i,redondances);</span>
+
+<span class="fc" id="L557">            }</span>
+        }
+
+<span class="fc" id="L560">        ArrayList&lt;Column&gt; cols = new ArrayList&lt;&gt;(); // creation des nouvelles colonnes</span>
+<span class="fc bfc" id="L561" title="All 2 branches covered.">        for (int i=0;i&lt;columns.size();i++){</span>
+<span class="fc" id="L562">            cols.add(new Column(new ArrayList()));</span>
+        }
+<span class="fc bfc" id="L564" title="All 2 branches covered.">        for(Map.Entry&lt;Integer, List&lt;Integer&gt;&gt; entry : correspondance.entrySet()) {</span>
+<span class="fc" id="L565">            int key = entry.getKey();</span>
+<span class="fc" id="L566">            List&lt;Integer&gt; value = entry.getValue();</span>
+<span class="fc" id="L567">            cols.get(nb).add(the_col.getCells().get(key));</span>
+<span class="fc" id="L568">            Double e= 0.0;</span>
+<span class="fc" id="L569">            String e2 =&quot;&quot;;</span>
+<span class="fc bfc" id="L570" title="All 2 branches covered.">            for(int i=0;i&lt;columns.size();i++){</span>
+<span class="fc" id="L571">                e=0.0;</span>
+<span class="fc" id="L572">                e2=&quot;&quot;;</span>
+<span class="fc" id="L573">                boolean isString = false;</span>
+<span class="fc bfc" id="L574" title="All 2 branches covered.">                if(i!=nb)</span>
+                {
+<span class="fc bfc" id="L576" title="All 2 branches covered.">                    for(int ind : value){</span>
+<span class="fc bfc" id="L577" title="All 2 branches covered.">                        if(String.valueOf(columns.get(i).getCells().get(ind)).equals(columns.get(i).getCells().get(ind))){</span>
+<span class="fc" id="L578">                            isString=true;</span>
+<span class="fc" id="L579">                            e2+=&quot; &quot;+columns.get(i).getCells().get(ind);</span>
+                        }
+                        else{
+<span class="fc bfc" id="L582" title="All 2 branches covered.">                            if(e==0.0){</span>
+<span class="fc" id="L583">                                e=  Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind)));</span>
+                            }
+<span class="fc bfc" id="L585" title="All 2 branches covered.">                            if(arg.equals(&quot;sum&quot;))</span>
+<span class="fc" id="L586">                            e+=  Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind)));</span>
+<span class="fc bfc" id="L587" title="All 2 branches covered.">                            else if(arg.equals(&quot;prod&quot;))</span>
+<span class="fc" id="L588">                                e*=  Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind)));</span>
+<span class="fc bfc" id="L589" title="All 2 branches covered.">                            else if(arg.equals(&quot;min&quot;))</span>
+<span class="fc" id="L590">                                e =  Double.min(Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind))),e);</span>
+<span class="pc bpc" id="L591" title="1 of 2 branches missed.">                            else if(arg.equals(&quot;max&quot;))</span>
+<span class="fc" id="L592">                                e =  Double.max(Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind))),e);</span>
+                        }
+<span class="fc" id="L594">                    }</span>
+<span class="fc bfc" id="L595" title="All 2 branches covered.">                    if(isString)</span>
+<span class="fc" id="L596">                        cols.get(i).add(e2);</span>
+<span class="fc" id="L597">                    else cols.get(i).add(e);</span>
+                }
+
+
+            }
+
+<span class="fc" id="L603">        }</span>
+<span class="fc" id="L604">        List&lt;String&gt; new_indexes = new ArrayList&lt;&gt;(indexes);</span>
+<span class="fc bfc" id="L605" title="All 2 branches covered.">        while(new_indexes.size()!=cols.get(0).getCells().size()){</span>
+<span class="fc" id="L606">            new_indexes.remove(new_indexes.size()-1);</span>
+        }
+<span class="fc" id="L608">        return new DataFrame(new_indexes,labels,cols);</span>
+    }
+
+
+
+
+    /**
+     *
+     * @param currentMax le maximum courrant
+     * @param cell la valeur de la celulle courante
+     * @param skipNa ignore les valeurs null ou non
+     * @return le max de toute les celulles precedente (la cellule courrante inclus)
+     */
+    private double maxCore(double currentMax, Object cell, boolean skipNa) {
+        try {
+            //handle case when cell's value is 'NaN' which is treated as legit double value
+<span class="fc bfc" id="L624" title="All 4 branches covered.">            if(skipNa &amp;&amp; Double.isNaN(Double.parseDouble(String.valueOf(cell))) ){</span>
+<span class="fc" id="L625">                return currentMax;</span>
+            }
+<span class="fc" id="L627">            currentMax = Double.max(currentMax,Double.parseDouble(String.valueOf(cell)));</span>
+<span class="fc" id="L628">        }catch (NumberFormatException n){</span>
+<span class="fc bfc" id="L629" title="All 2 branches covered.">            if(!skipNa){</span>
+<span class="fc" id="L630">                currentMax = Double.parseDouble(&quot;NaN&quot;);//Sum of this column is NaN</span>
+            }
+<span class="fc" id="L632">        }</span>
+<span class="fc" id="L633">        return currentMax;</span>
+    }
+
+
+
+
+    /**
+     * Getter
+     * @return Liste des indices
+     */
+    public List&lt;String&gt; getIndexes() {
+<span class="fc" id="L644">        return indexes;</span>
+    }
+
+    /**
+     * Getter
+     * @return Liste de labels
+     */
+    public List&lt;String&gt; getLabels() {
+<span class="fc" id="L652">        return labels;</span>
+    }
+
+    /**
+     * Getter
+     * @return Liste de colonnes
+     */
+    public List&lt;Column&gt; getColumns() {
+<span class="fc" id="L660">        return columns;</span>
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L666" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="fc bfc" id="L667" title="All 4 branches covered.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="fc" id="L669">        DataFrame dataFrame = (DataFrame) o;</span>
+
+<span class="fc bfc" id="L671" title="All 2 branches covered.">        if (!Objects.equals(indexes, dataFrame.indexes)) return false;</span>
+<span class="fc bfc" id="L672" title="All 2 branches covered.">        if (!Objects.equals(labels, dataFrame.labels)) return false;</span>
+<span class="fc" id="L673">        return Objects.equals(columns, dataFrame.columns);</span>
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -15,4 +15,8 @@
 # IntelliJ ignore
 .idea
 .gradle
+/build/generated/*
+/build/test-results/*
+/build/tmp/*
+/build/jacoco/*
 /out/*
