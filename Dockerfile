@@ -11,4 +11,6 @@ RUN cp ${PROJECT_NAME}/build/libs/${PROJECT_NAME}-1.0.jar ${PROJECT_NAME}-1.0.ja
 
 COPY dockerScript.sh dockerScript.sh
 
+RUN ["chmod", "+x", "dockerScript.sh"]
+
 ENTRYPOINT ["./dockerScript.sh"]
