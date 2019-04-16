@@ -22,7 +22,7 @@ public class CsvParser {
     /**
      *
      * @param filename Le nom du fichier
-     * @throws IOException
+     * @throws IOException fichier introuvable ou corrumpu
      */
     public CsvParser(String filename) throws IOException {
         ArrayList<ArrayList<String>> records = new ArrayList<>();
