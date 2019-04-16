@@ -67,7 +67,7 @@ public class DataFrameTest {
 
     @Test(expected = NullPointerException.class)
     public void test_NullPointer_Contructor1(){
-        new DataFrame((String[]) null,null);
+        new DataFrame(null,null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -109,8 +109,8 @@ public class DataFrameTest {
         DataFrame d3 = dataframe.groupByAgregate("client_name","max");
         DataFrame d4 = dataframe.groupByAgregate("client_name","sum");
         DataFrame d5 = dataframe.groupByAgregate("client_name","prod");
-        assertEquals("Probleme dans le groupBy",d2.getColumns().get(2).getCells().get(0),25.0);
-        assertEquals("Probleme dans le groupBy",d2.getColumns().get(2).getCells().get(1),20.0);
+        assertEquals("Probleme dans le groupBy",25.0,d2.getColumns().get(2).getCells().get(0));
+        assertEquals("Probleme dans le groupBy",20.0,d2.getColumns().get(2).getCells().get(1));
 
     }
 }

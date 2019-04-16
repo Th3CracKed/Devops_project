@@ -26,27 +26,26 @@ public class CsvParser {
      */
     public CsvParser(String filename) throws IOException {
         ArrayList<ArrayList<String>> records = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        BufferedReader br = new BufferedReader(new FileReader(filename));
             String line;
             while ((line = br.readLine()) != null) {
                 ArrayList<String> values = new ArrayList<>(Arrays.asList(line.split(",")));
                 records.add(values);
             }
-        }
 
         records.remove(records.size()-1); // dernier element qui est vide
 
         /* Recuperation des labels*/
-        labels= records.get(0);
+        labels = records.get(0);
         if(labels.get(0).equals("Index")){
             labels.remove(0);
             containsIndex= true;
         }
         records.remove(0);
-        for(int i=0;i<labels.size();i++){
+        for(int i = 0; i < labels.size(); i++){
             columns.add(new Column(new ArrayList<String>()));
         }
-        for(int i=0;i<records.size();i++){
+        for(int i = 0;i < records.size(); i++){
 
             /* Recuperation des indexes (s'ils existent) */
             if(containsIndex){
@@ -59,7 +58,7 @@ public class CsvParser {
             /* ========================================== */
 
             /* Boucle d'ajout des colonnes */
-            for(int j=0;j<labels.size();j++){
+            for(int j = 0; j < labels.size(); j++){
                 double f;
                 String val = records.get(i).get(j);
                 try {
