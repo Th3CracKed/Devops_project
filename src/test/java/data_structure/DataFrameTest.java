@@ -65,7 +65,7 @@ public class DataFrameTest {
 
     @Test(expected = NullPointerException.class)
     public void test_NullPointer_Contructor1(){
-        new DataFrame((String[]) null,null);
+        new DataFrame(null,null);
     }
 
     @Test(expected = IllegalArgumentException.class)

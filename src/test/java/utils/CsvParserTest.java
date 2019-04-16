@@ -15,8 +15,6 @@ public class CsvParserTest {
 
     private DataFrame dataFrameTest = new DataFrame(mIndexs, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
 
-
-    private CsvParser myParser;
     @Test
     public void testAvecIndex() {
         DataFrame dataframe = new DataFrame("rsc/csv_examples/test.csv");
