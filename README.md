@@ -80,8 +80,8 @@ Plus de details : http://manifold.systems/docs.html#self--extensions
  ## Docker :
  
  https://hub.docker.com/r/th3cracked/devops_project/
-On a utiliser une image docker avec java preinstaller, dans le Dockerfile on build l'application.
-Pour pouvoir lancer les tests et voir le scénario sur la même image, on a créer un script shell.
+On a utilisé une image docker avec java préinstallé, dans le Dockerfile on build l'application.
+Pour pouvoir lancer les tests et voir le scénario sur la même image, on a crée un script shell.
 
 **Pour dérouler un scénario :**
 docker run -it th3cracked/devops_project scenario
@@ -96,18 +96,18 @@ docker run -it th3cracked/devops_project test
  On a utilisé Dagger2 qui permet de respecter le 'Open / Closed principle' et permet aussi d'avoir des tests unitaire plus propre.
  Cette partie est juste pour experimenter et n'est ajoutée qu'à la fin dans un package séparé (la couverture du code dans cette partie n'est pas à 100% puisque Dagger genère des classes qui font l'injection).
  
- On a utilisé Dagger sur un constructeur de Column et un autre de DataFrame sans modifier l'interface => une manière simple de faire l'injection de dépendance et d'annoter les constructeur avec @Inject mais nous avons choisi de experimenter avec l'injection de dépendance comme si on avait pas l'accès au code comme dans le cas d'une bibliothèque, ce qui est plus dur a réaliser.
+ On a utilisé Dagger sur un constructeur de Column et un autre de DataFrame sans modifier l'interface => une manière simple de faire l'injection de dépendance et d'annoter les constructeur avec @Inject mais nous avons choisi d'experimenter avec l'injection de dépendance comme si on avait pas l'accès au code comme dans le cas d'une bibliothèque, ce qui est plus dur a réaliser.
  
  
  ## Feedback :
     
  **Gradle Problèmes :**
    
- 1- Problème de configuration Travis avec gradle à cause de permission d'execution sur le fichier gradlew   
+ 1- Problème de configuration Travis avec gradle à cause de permission d'exécution sur le fichier gradlew   
  
  *Solution :*  
  promouvoir la permission avec git update-index --chmod=+x gradlew  
- ou  ajouter dans le fichier de configuration de travis la règle suivante :
+ ou ajouter dans le fichier de configuration de travis la règle suivante :
 
 `before_install: 
  -chmod +x gradlew`
