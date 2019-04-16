@@ -39,7 +39,22 @@ Le premier argument est un String qui permet de choisir la colonne sur laquelle 
 Voici un exemple d'utilisation :
 > DataFrame d = dataframe_courses.groupByAgregate("client_name","min");
 
-Cette ligne permet de créer un dataframe d qui contient le minimum d'achat de chaque client pour un dataframe contenant une liste de courses contenant un prix.
+Cette ligne permet de créer un dataframe d qui contient le minimum d'achat de chaque client pour un dataframe contenant une liste de courses contenant un prix. <br>
+*dataframe_courses*
+>  client_name   product_name  price <br>
+0       Tommy           ps4   300 <br>
+1       Robin  calculatrice    20 <br>
+2       Tommy   micro-ondes 64.25 <br>
+3       Tommy        miroir    25 <br>
+4       Fayhe seche-cheveux    45 <br>
+
+Résultat après le groupBy
+
+>  client_name      product_name      price <br>
+0       Tommy  ps4 micro-ondes miroir  25.0 <br> 
+1       Robin            calculatrice  20.0 <br>
+2       Fayhe           seche-cheveux  45.0 
+
 
 **Couverture du code :**
 
@@ -95,4 +110,4 @@ docker run -it th3cracked/devops_project test
    
   - Le temps de création d'images lors du débuggage des problèmes sur docker est insupportable.
    
-  - Un fichier script shell créer sur windows n'est pas compatible avec linux et ce bug nous à pris énormement du temps à résoudre. [Plus de détails](https://forums.docker.com/t/standard-init-linux-go-175-exec-user-process-caused-no-such-file/20025/2)
+  - Un fichier script shell créer sur windows n'est pas compatible avec linux et ce bug nous à pris énormement du temps à résoudre. 
