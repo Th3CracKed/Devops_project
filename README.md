@@ -6,10 +6,18 @@
 ## Liste des fonctionnalitées (toute celle proposées dans le sujet avec celles qui sont optionnelles ) :
 
 **4 Constructeurs de DataFrame :**
-- Avec des Lists. 
 - Avec des array et Vargs pour les colonnes
-- Avec un parseur CSV
+>DataFrame dataFrame = new DataFrame(new String[]{"1", "2", "3"},  new String[]{"A", "B", "C"}, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
+
+- Avec des Lists. 
+>myParser = new CsvParser("rsc/csv_examples/test.csv");
+DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+
+- Avec un fichier CSV
+> DataFrame dataframe = new DataFrame("chemin/vers/fichier.csv");
+
 - Avec un parseur ( Version dependency injection [Voir ci-dessous](#Dependency injection))
+
 
 **Affichage :**
 - PrintAll
