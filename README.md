@@ -95,4 +95,4 @@ docker run -it th3cracked/devops_project test
    
   - Le temps de création d'images lors du débuggage des problèmes sur docker est insupportable.
    
-  - Un fichier script shell créer sur windows n'est pas compatible avec linux et ce bug nous à pris énormement du temps à résoudre. 
+  - Un fichier script shell créer sur windows n'est pas compatible avec linux et ce bug nous à pris énormement du temps à résoudre. [Plus de détails](https://forums.docker.com/t/standard-init-linux-go-175-exec-user-process-caused-no-such-file/20025/2)

@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "Hello"
   if [ "$1" == "test" ]
   then cd Devops_project && ./gradlew test
   elif [ "$1" == "scenario" ]

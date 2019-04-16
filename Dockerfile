@@ -7,7 +7,7 @@ COPY . /${PROJECT_NAME}
 RUN cd /${PROJECT_NAME} && ./gradlew clean && \
     cd /${PROJECT_NAME} && ./gradlew build
 
-COPY build/libs/${PROJECT_NAME}-1.0.jar ${PROJECT_NAME}-1.0.jar
+RUN cp ${PROJECT_NAME}/build/libs/${PROJECT_NAME}-1.0.jar ${PROJECT_NAME}-1.0.jar
 
 COPY dockerScript.sh dockerScript.sh
 
