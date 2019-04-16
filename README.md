@@ -10,7 +10,7 @@
 >DataFrame dataFrame = new DataFrame(new String[]{"1", "2", "3"},  new String[]{"A", "B", "C"}, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
 
 - Avec des Lists. 
->myParser = new CsvParser("rsc/csv_examples/test.csv");
+>myParser = new CsvParser("rsc/csv_examples/test.csv"); <br>
 DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
 
 - Avec un fichier CSV
