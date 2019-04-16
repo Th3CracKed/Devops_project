@@ -579,7 +579,7 @@ public class DataFrame{
                             e2+=" "+columns.get(i).getCells().get(ind);
                         }
                         else{
-                            if(e==0.0){
+                            if(e==0.0 && !arg.equals("sum")){
                                 e=  Double.parseDouble(String.valueOf(columns.get(i).getCells().get(ind)));
                             }
                             if(arg.equals("sum"))
