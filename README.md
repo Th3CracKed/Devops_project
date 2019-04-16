@@ -60,11 +60,9 @@ before_install:
  https://hub.docker.com/r/th3cracked/devops_project/
 On a utiliser une image docker avec java preinstaller, dans le Dockerfile on build l'application.
 Pour dérouler un scénario :
-docker run -it th3cracked/devops_project
-java -jar /Devops_project-1.0.jar
-On pouvait créer directement une image docker qui lance le scénario (voir le commentaire Dockerfile)
-
+docker run -it th3cracked/devops_project scenario
 Pour lancer les tests : 
-cd Devops_project && ./gradlew test
+docker run -it th3cracked/devops_project
+si vous voulez lancer linux pour voir la structure des fichiers
  
  

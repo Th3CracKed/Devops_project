@@ -64,17 +64,6 @@ public class Column<E> {
     }
 
     /**
-     * Permet de savoir si un élément est contenu dans la colonne
-     * @param element l'élément à rechercher
-     * @return un booléen qui renvoi true si l'élément est dans la colonne
-     */
-    public boolean contains(E element){
-        if(cells.contains(element))
-            return true;
-        return false;
-    }
-
-    /**
      * Trouver toutes les occurences d'un objet
      * @param obj l'objet à trouver
      * @return Renvoi une liste des positions des occurences trouvées dans la colonne

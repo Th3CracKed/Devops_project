@@ -2,9 +2,8 @@ package data_structure;
 
 import utils.CsvParser;
 
-import javax.lang.model.element.Element;
+import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DataFrame{
 
@@ -74,8 +73,8 @@ public class DataFrame{
             }
         }
 
-        indexes=mIndexes;
-        labels=mLabels;
+        indexes = mIndexes;
+        labels = mLabels;
 
     }
 
@@ -83,11 +82,29 @@ public class DataFrame{
      *Constructeur permettant de parser un fichier .csv en DataFrame
      * @param csv_filename Le nom du fichier CSV à transformer en dataframe
      */
-    public DataFrame(String csv_filename){
+    public DataFrame(String csv_filename) throws IOException {
         CsvParser myParser = new CsvParser(csv_filename);
-        indexes= myParser.getIndexes();
-        labels=myParser.getLabels();
-        columns=myParser.getColumns();
+        indexes = myParser.getIndexes();
+        labels = myParser.getLabels();
+        columns = myParser.getColumns();
+        if(labels.size() != columns.size())
+            throw new IllegalArgumentException("Le nombre de label doit-etre egale au nombre de colonnes");
+        for (Column col : columns) {
+            if(indexes.size() != col.numberOfCells()) {
+                throw new IllegalArgumentException("Le nombre d'indices doit-etre egale à la taille de colonnes");
+            }
+        }
+    }
+
+    /**
+     * Constructeur permettant de parser un fichier .csv en DataFrame
+     * Ce constrcteur est redundant et permet d'experimenter avec dependency injection (Dagger2)
+     * @param myParser Le parseur du fichier CSV à transformer en dataframe
+     */
+    public DataFrame(CsvParser myParser){
+        indexes = myParser.getIndexes();
+        labels = myParser.getLabels();
+        columns = myParser.getColumns();
         if(labels.size() != columns.size())
             throw new IllegalArgumentException("Le nombre de label doit-etre egale au nombre de colonnes");
         for (Column col : columns) {
@@ -101,18 +118,14 @@ public class DataFrame{
      * Affiche tout le DataFrame
      */
     public String printAll(){
-        String result = printCore(indexes.size(),true);
-        System.out.println(result);
-        return result;
+        return printCore(indexes.size(),true);
     }
 
     /**
      * Affiche les premières lignes de DataFrame
      */
     public String printHead(){
-        String result = printCore(indexes.size()-1,true);
-        System.out.println(result);
-        return result;
+        return printCore(indexes.size()-1,true);
     }
 
     /**
@@ -120,18 +133,14 @@ public class DataFrame{
      * @param nbLines le nombre de lignes à afficher
      */
     public String printHead(int nbLines){
-        String result = printCore(nbLines,true);
-        System.out.println(result);
-        return result;
+        return printCore(nbLines,true);
     }
 
     /**
      * Affiche les dernières lignes de DataFrame
      */
     public String printTail(){
-        String result = printCore(indexes.size()-1,false);
-        System.out.println(result);
-        return result;
+        return printCore(indexes.size()-1,false);
     }
 
     /**
@@ -139,9 +148,7 @@ public class DataFrame{
      * @param nbLines le nombre de lignes à afficher
      */
     public String printTail(int nbLines){
-        String result = printCore(nbLines,false);
-        System.out.println(result);
-        return result;
+        return printCore(nbLines,false);
     }
 
     /**
