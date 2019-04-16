@@ -1,15 +1,22 @@
 [![Build Status](https://travis-ci.com/Th3CracKed/Devops_project.svg?token=Ua5Bde4zpdwh2oEzqAWq&branch=master)](https://travis-ci.com/Th3CracKed/Devops_project)
 [![license](https://img.shields.io/badge/license-GPL%203.0-yellowgreen.svg)](https://github.com/Th3CracKed/Devops_project/blob/master/LICENSE.txt)
-[![Coverage](https://codecov.io/gh/Th3CracKed/Devops_project/branch/master/graph/badge.svg)](https://codecov.io/gh/Th3CracKed/Devops_project)
 # Devops_project
 
 ## Liste des fonctionnalitées (toute celle proposées dans le sujet avec celles qui sont optionnelles ) :
 
 **4 Constructeurs de DataFrame :**
-- Avec des Lists. 
 - Avec des array et Vargs pour les colonnes
-- Avec un parseur CSV
+>DataFrame dataFrame = new DataFrame(new String[]{"1", "2", "3"},  new String[]{"A", "B", "C"}, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
+
+- Avec des Lists. 
+>CsvParser myParser = new CsvParser("chemin/vers/fichier.csv"); <br>
+DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+
+- Avec un fichier CSV
+> DataFrame dataframe = new DataFrame("chemin/vers/fichier.csv");
+
 - Avec un parseur ( Version dependency injection [Voir ci-dessous](#Dependency injection))
+
 
 **Affichage :**
 - PrintAll
@@ -38,9 +45,9 @@ Chaque méthode prend soit un axis (ligne ou colonne), soit prend un axis et un 
 Les deux fonctionnalités sont implémentées dans la même méthode : groupByAgregate.
 Le premier argument est un String qui permet de choisir la colonne sur laquelle on va vérifier les occurences sur lesquelles on va effectuer des opérations, le deuxième argument correspond à l'opération à effectuer : sum,prod,min,max (somme, produit, min, max)
 Voici un exemple d'utilisation :
-> DataFrame d = dataframe_courses.groupByAgregate("client_name","min");
+> DataFrame d = dataframe_courses.groupByAgregate("client_name","sum");
 
-Cette ligne permet de créer un dataframe d qui contient le minimum d'achat de chaque client pour un dataframe contenant une liste de courses contenant un prix. <br>
+Cette ligne permet de créer un dataframe d qui contient le prix total de toutes les courses (panier) pour chaque client. <br>
 *dataframe_courses*
 >  client_name   product_name  price <br>
 0       Tommy           ps4   300 <br>
@@ -52,7 +59,7 @@ Cette ligne permet de créer un dataframe d qui contient le minimum d'achat de c
 Résultat après le groupBy
 
 >  client_name      product_name      price <br>
-0       Tommy  ps4 micro-ondes miroir  25.0 <br> 
+0       Tommy  ps4 micro-ondes miroir  389.25 <br> 
 1       Robin            calculatrice  20.0 <br>
 2       Fayhe           seche-cheveux  45.0 
 

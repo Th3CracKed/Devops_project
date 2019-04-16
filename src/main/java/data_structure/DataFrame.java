@@ -81,6 +81,7 @@ public class DataFrame{
     /**
      *Constructeur permettant de parser un fichier .csv en DataFrame
      * @param csv_filename Le nom du fichier CSV à transformer en dataframe
+     * @throws IOException fichier introuvable ou corrumpu
      */
     public DataFrame(String csv_filename) throws IOException {
         CsvParser myParser = new CsvParser(csv_filename);
@@ -102,37 +103,38 @@ public class DataFrame{
     }
 
     /**
-     * Affiche tout le DataFrame
+     * @return tout le DataFrame
      */
     public String printAll(){
         return printCore(indexes.size(),true);
     }
 
     /**
-     * Affiche les premières lignes de DataFrame
+     * @return Les premières lignes de DataFrame
      */
     public String printHead(){
         return printCore(indexes.size()-1,true);
     }
 
     /**
-     * Affiche les premières lignes de DataFrame
+     *
      * @param nbLines le nombre de lignes à afficher
+     * @return Les premières lignes de DataFrame
      */
     public String printHead(int nbLines){
         return printCore(nbLines,true);
     }
 
     /**
-     * Affiche les dernières lignes de DataFrame
+     * @return Les dernières lignes de DataFrame
      */
     public String printTail(){
         return printCore(indexes.size()-1,false);
     }
 
     /**
-     * Affiche les dernières lignes de DataFrame
      * @param nbLines le nombre de lignes à afficher
+     * @return Les dernières lignes de DataFrame
      */
     public String printTail(int nbLines){
         return printCore(nbLines,false);
