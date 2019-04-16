@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/Th3CracKed/Devops_project.svg?token=Ua5Bde4zpdwh2oEzqAWq&branch=master)](https://travis-ci.com/Th3CracKed/Devops_project)
-[![Build Status](	https://img.shields.io/github/license/:th3cracked/:Devops_project.svg)](https://github.com/Th3CracKed/Devops_project/blob/master/LICENSE.txt)
+[![license](https://img.shields.io/badge/license-GPL%203.0-yellowgreen.svg)](https://github.com/Th3CracKed/Devops_project/blob/master/LICENSE.txt)
 [![Coverage](https://codecov.io/gh/Th3CracKed/Devops_project/branch/master/graph/badge.svg)](https://codecov.io/gh/Th3CracKed/Devops_project)
 # Devops_project
 
