@@ -1,13 +1,11 @@
 import data_structure.DataFrame;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Arrays;
 
 public class Main {
 
     public static void main(String[] args) {
-        /*
         System.out.println("Demonstration des fonctionalitees du DataFrame");
         System.out.println("** DataFrame(new String[]{\"Indice 1\", \"Indice 2\", \"Indice 3\"}, new String[]{\"Label A\", \"Label B\", \"Label C\"}, Arrays.asList(\"Valeur A_1\",\"Valeur A_2\",\"Valeur A_3\"),Arrays.asList(2,5.5,6.4),Arrays.asList(\"2\",5.78,5) **");
         DataFrame dataFrame = new DataFrame(new String[]{"Indice 1", "Indice 2", "Indice 3"}, new String[]{"Label A", "Label B", "Label C"}, Arrays.asList("Valeur A_1","Valeur A_2","Valeur A_3"),Arrays.asList(2,5.5,6.4),Arrays.asList("2",5.78,5));
@@ -81,7 +79,7 @@ public class Main {
         System.out.println("** GetCells get(1) **");
         System.out.println(d2.getColumns().get(2).getCells().get(1));
         }
-*/
+
 
     }
 
