@@ -122,6 +122,6 @@ docker run -it th3cracked/devops_project test
   
   
 ## Docker Screenshots :
-![Docker test](docker test.PNG)
-![Docker scenario 1](ddocker scenario 1.PNG)
-![Docker scenario 2](docker scenario 2.PNG)
+![Docker test](https://github.com/Th3CracKed/Devops_project/raw/master/docker%20test.PNG)
+![Docker scenario 1](https://github.com/Th3CracKed/Devops_project/raw/master/docker%20scenario%201.PNG)
+![Docker scenario 2](https://github.com/Th3CracKed/Devops_project/raw/master/docker%20scenario%202.PNG)
