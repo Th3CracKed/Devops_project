@@ -119,3 +119,9 @@ docker run -it th3cracked/devops_project test
   - Le temps de création d'images lors du débuggage des problèmes sur docker est insupportable (trop long).
    
   - Un fichier script shell créer sur windows n'est pas compatible avec linux et ce bug nous a pris énormement du temps à résoudre. 
+  
+  
+## Docker Screenshots :
+![Docker test](docker test.PNG)
+![Docker scenario 1](ddocker scenario 1.PNG)
+![Docker scenario 2](docker scenario 2.PNG)
