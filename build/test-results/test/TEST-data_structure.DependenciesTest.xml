@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="data_structure.DependenciesTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-04-16T17:21:23" hostname="DESKTOP-UAFVBFT" time="0.015">
-  <properties/>
-  <testcase name="DataFrameTest" classname="data_structure.DependenciesTest" time="0.01"/>
-  <testcase name="ColumnTest" classname="data_structure.DependenciesTest" time="0.005"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

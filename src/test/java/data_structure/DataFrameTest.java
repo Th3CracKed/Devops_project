@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 public class DataFrameTest {
 
@@ -119,10 +118,12 @@ public class DataFrameTest {
     public void equals(){
         DataFrame df1 = new DataFrame(new String[]{"1", "2", "3"}, new String[]{"A", "B", "C"}, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
         DataFrame df2 = new DataFrame(new String[]{"1", "2", "3"}, new String[]{"A", "B", "C"}, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
+        DataFrame df3 = new DataFrame(new String[]{"1", "2","3"}, new String[]{"A", "B"}, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6));
         assertEquals(df1,df1);
         assertNotEquals("DataFrame ne doit pas equals a un object",df1, new Object());
         assertNotEquals("DataFrame ne doit pas equals a null",df1, null);
         assertEquals("probleme dans la fonction equals,ces deux objets ont le meme contenu",df1,df2);
+        assertNotEquals(df1,df3);
     }
 
 
@@ -134,7 +135,7 @@ public class DataFrameTest {
         DataFrame d4 = dataframe.groupByAgregate("client_name","sum");
         DataFrame d5 = dataframe.groupByAgregate("client_name","prod");
         DataFrame d6 = dataframe.groupByAgregate("colonne_inexistante","min");
-        assertEquals("colonne inexistante",null,d6);
+        assertNull("colonne inexistante", d6);
         assertEquals("Probleme dans le groupBy",25.0,d2.getColumns().get(2).getCells().get(0));
         assertEquals("Probleme dans le groupBy",20.0,d2.getColumns().get(2).getCells().get(1));
 
