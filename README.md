@@ -45,9 +45,9 @@ Chaque méthode prend soit un axis (ligne ou colonne), soit prend un axis et un 
 Les deux fonctionnalités sont implémentées dans la même méthode : groupByAgregate.
 Le premier argument est un String qui permet de choisir la colonne sur laquelle on va vérifier les occurences sur lesquelles on va effectuer des opérations, le deuxième argument correspond à l'opération à effectuer : sum,prod,min,max (somme, produit, min, max)
 Voici un exemple d'utilisation :
-> DataFrame d = dataframe_courses.groupByAgregate("client_name","min");
+> DataFrame d = dataframe_courses.groupByAgregate("client_name","sum");
 
-Cette ligne permet de créer un dataframe d qui contient le minimum d'achat de chaque client pour un dataframe contenant une liste de courses contenant un prix. <br>
+Cette ligne permet de créer un dataframe d qui contient le prix total de toutes les courses (panier) pour chaque client. <br>
 *dataframe_courses*
 >  client_name   product_name  price <br>
 0       Tommy           ps4   300 <br>
@@ -59,7 +59,7 @@ Cette ligne permet de créer un dataframe d qui contient le minimum d'achat de c
 Résultat après le groupBy
 
 >  client_name      product_name      price <br>
-0       Tommy  ps4 micro-ondes miroir  25.0 <br> 
+0       Tommy  ps4 micro-ondes miroir  389.25 <br> 
 1       Robin            calculatrice  20.0 <br>
 2       Fayhe           seche-cheveux  45.0 
 
