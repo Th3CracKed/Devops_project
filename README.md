@@ -2,10 +2,10 @@
 [![Build Status](	https://img.shields.io/github/license/:user/:repo.svg)](https://github.com/Th3CracKed/Devops_project/blob/master/LICENSE.txt)
 # Devops_project
 
-## Liste des fonctionnalitées (toute celle proposer dans le sujet avec celle qui sont optionnelles ) :
+## Liste des fonctionnalitées (toute celle proposées dans le sujet avec celles qui sont optionnelles ) :
 
 **4 Constructeurs de DataFrame :**
-- Avec des Lists.
+- Avec des Lists. 
 - Avec des array et Vargs pour les colonnes
 - Avec un parseur CSV
 - Avec un parseur ( Version dependency injection [Voir ci-dessous](#Dependency injection))
@@ -19,7 +19,7 @@
 
 **Sélection dans un dataFrame :**
 
-Créer un nouveaudataframe en séelectionnant un sous-ensemble des donnéees d’un dataframe existant.
+Créer un nouveau dataframe en sélectionnant un sous-ensemble des donnéees d’un dataframe existant.
 
 - Sous-ensemble de lignes à partir de leur index.
 
@@ -27,14 +27,18 @@ Créer un nouveaudataframe en séelectionnant un sous-ensemble des donnéees d�
 
 **Statistiques :**
 
-Chaque methode soit prend un axis (ligne ou colonne), soit prend un axis et un boolean pour skiper les valeurs null ou non, soit ne prend pas de paramètre (comportement par défault par ligne et skip null)
+Chaque méthode prend soit un axis (ligne ou colonne), soit prend un axis et un boolean pour skiper les valeurs null ou non, soit ne prend pas de paramètre (comportement par défault par ligne et skip null)
  - Sum
  - Min
  - Max
  - Average
 
 **Groupe By et Aggregate :**
-//TODO
+Les deux fonctionnalités sont implémentées dans la même méthode : groupByAgregate.
+Le premier argument est un String qui permet de choisir la colonne sur laquelle on va vérifier les occurences sur lesquelles on va effectuer des opérations, le deuxième argument correspond à l'opération à effectuer : sum,prod,min,max (somme, produit, min, max)
+Voici un exemple d'utilisation :
+>> DataFrame d = dataframe_courses.groupByAgregate("client_name","min");
+Cette ligne permet de récupérer le minimum d'achat de tous les clients 
 
 **Couverture du code :**
 
