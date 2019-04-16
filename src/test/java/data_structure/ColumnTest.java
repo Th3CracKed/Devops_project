@@ -37,4 +37,6 @@ public class ColumnTest {
         assertNotEquals("Column ne doit pas equals a null",col1, null);
         assertEquals("probleme dans la fonction equals,ces deux objets ont le meme contenu",col1,col2);
     }
+
+
 }

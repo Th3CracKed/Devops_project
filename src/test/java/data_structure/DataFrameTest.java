@@ -39,6 +39,34 @@ public class DataFrameTest {
         assertNotEquals(null,df2);
     }
 
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_illegal_Constructor2() {
+        try {
+            myParser = new CsvParser("rsc/csv_examples/test.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<String> indexesbug = new ArrayList<>(myParser.getIndexes());
+        indexesbug.add("erreur");
+        DataFrame df2 = new DataFrame(indexesbug, myParser.getLabels(), myParser.getColumns());
+        assertNotEquals(null,df2);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void test_illegal2_Constructor2() {
+        try {
+            myParser = new CsvParser("rsc/csv_examples/test.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<String> labelsbug = new ArrayList<>(myParser.getLabels());
+        labelsbug.add("erreur");
+        DataFrame df2 = new DataFrame(myParser.getIndexes(), labelsbug, myParser.getColumns());
+        assertNotEquals(null,df2);
+    }
+
     @Test
     public void testConstructor3() {
         DataFrame df3 = new DataFrame("rsc/csv_examples/test.csv");
@@ -76,11 +104,7 @@ public class DataFrameTest {
         assertNotEquals(null,dataFrameIndex);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void test_Illegal_Argument_Index_Contructor(){
-        DataFrame dataFrameIndex = new DataFrame(mIndexes, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","6"));
-        assertNotEquals(null,dataFrameIndex);
-    }
+
 
     @Test(expected = IllegalArgumentException.class)
     public void test_Illegal_Argument_Label_Contructor1(){
@@ -109,6 +133,8 @@ public class DataFrameTest {
         DataFrame d3 = dataframe.groupByAgregate("client_name","max");
         DataFrame d4 = dataframe.groupByAgregate("client_name","sum");
         DataFrame d5 = dataframe.groupByAgregate("client_name","prod");
+        DataFrame d6 = dataframe.groupByAgregate("colonne_inexistante","min");
+        assertEquals("colonne inexistante",null,d6);
         assertEquals("Probleme dans le groupBy",25.0,d2.getColumns().get(2).getCells().get(0));
         assertEquals("Probleme dans le groupBy",20.0,d2.getColumns().get(2).getCells().get(1));
 

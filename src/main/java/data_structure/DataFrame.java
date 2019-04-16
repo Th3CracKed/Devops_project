@@ -87,13 +87,7 @@ public class DataFrame{
         indexes = myParser.getIndexes();
         labels = myParser.getLabels();
         columns = myParser.getColumns();
-        if(labels.size() != columns.size())
-            throw new IllegalArgumentException("Le nombre de label doit-etre egale au nombre de colonnes");
-        for (Column col : columns) {
-            if(indexes.size() != col.numberOfCells()) {
-                throw new IllegalArgumentException("Le nombre d'indices doit-etre egale à la taille de colonnes");
-            }
-        }
+
     }
 
     /**
@@ -105,13 +99,6 @@ public class DataFrame{
         indexes = myParser.getIndexes();
         labels = myParser.getLabels();
         columns = myParser.getColumns();
-        if(labels.size() != columns.size())
-            throw new IllegalArgumentException("Le nombre de label doit-etre egale au nombre de colonnes");
-        for (Column col : columns) {
-            if(indexes.size() != col.numberOfCells()) {
-                throw new IllegalArgumentException("Le nombre d'indices doit-etre egale à la taille de colonnes");
-            }
-        }
     }
 
     /**
