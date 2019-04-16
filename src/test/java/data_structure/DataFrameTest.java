@@ -20,6 +20,8 @@ public class DataFrameTest {
     private CsvParser myParser;
 
     private DataFrame dataFrame = new DataFrame(mIndexes, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","5","6"));
+    private DataFrame df2;
+    private DataFrame df3;
 
     @Test
     public void testContructor1(){
@@ -33,14 +35,14 @@ public class DataFrameTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        DataFrame dataframe = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
-        assertNotEquals(null,dataframe);
+        DataFrame df2 = new DataFrame(myParser.getIndexes(), myParser.getLabels(), myParser.getColumns());
+        assertNotEquals(null,df2);
     }
 
     @Test
     public void testConstructor3() {
-        DataFrame dataframe = new DataFrame("rsc/csv_examples/test.csv");
-        assertNotEquals(null,dataframe);
+        DataFrame df3 = new DataFrame("rsc/csv_examples/test.csv");
+        assertNotEquals(null,df3);
     }
 
 
@@ -75,10 +77,19 @@ public class DataFrameTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void test_Illegal_Argument_Index_Contructor(){
+        DataFrame dataFrameIndex = new DataFrame(mIndexes, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6),Arrays.asList("2","6"));
+        assertNotEquals(null,dataFrameIndex);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void test_Illegal_Argument_Label_Contructor1(){
         DataFrame dataFrameLabel = new DataFrame(mIndexes, mLabels, Arrays.asList("Test1","Test2","test3"),Arrays.asList(2,5,6));
         assertNotEquals(null,dataFrameLabel);
     }
+
+
+
 
     @Test
     public void equals(){
