@@ -15,5 +15,4 @@
 # IntelliJ ignore
 .idea
 .gradle
-/build/*
 /out/*

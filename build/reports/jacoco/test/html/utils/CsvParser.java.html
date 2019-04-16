@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CsvParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Devops_project</a> &gt; <a href="index.source.html" class="el_package">utils</a> &gt; <span class="el_source">CsvParser.java</span></div><h1>CsvParser.java</h1><pre class="source lang-java linenums">package utils;
+
+
+import data_structure.Column;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
+/**
+ * La classe permettant de parser un CSV, indÃ©pendante de Dataframe.
+ */
+public class CsvParser {
+
+<span class="fc" id="L17">    private ArrayList&lt;String&gt; indexes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L18">    private ArrayList&lt;String&gt; labels = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L19">    private ArrayList &lt;Column&gt; columns = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L20">    private boolean containsIndex = false;</span>
+
+    /**
+     *
+     * @param filename Le nom du fichier
+     * @throws IOException
+     */
+<span class="fc" id="L27">    public CsvParser(String filename) throws IOException {</span>
+<span class="fc" id="L28">        ArrayList&lt;ArrayList&lt;String&gt;&gt; records = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L29">        BufferedReader br = new BufferedReader(new FileReader(filename));</span>
+            String line;
+<span class="fc bfc" id="L31" title="All 2 branches covered.">            while ((line = br.readLine()) != null) {</span>
+<span class="fc" id="L32">                ArrayList&lt;String&gt; values = new ArrayList&lt;&gt;(Arrays.asList(line.split(&quot;,&quot;)));</span>
+<span class="fc" id="L33">                records.add(values);</span>
+<span class="fc" id="L34">            }</span>
+
+<span class="fc" id="L36">        records.remove(records.size()-1); // dernier element qui est vide</span>
+
+        /* Recuperation des labels*/
+<span class="fc" id="L39">        labels = records.get(0);</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if(labels.get(0).equals(&quot;Index&quot;)){</span>
+<span class="fc" id="L41">            labels.remove(0);</span>
+<span class="fc" id="L42">            containsIndex= true;</span>
+        }
+<span class="fc" id="L44">        records.remove(0);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        for(int i = 0; i &lt; labels.size(); i++){</span>
+<span class="fc" id="L46">            columns.add(new Column(new ArrayList&lt;String&gt;()));</span>
+        }
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        for(int i = 0;i &lt; records.size(); i++){</span>
+
+            /* Recuperation des indexes (s'ils existent) */
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            if(containsIndex){</span>
+<span class="fc" id="L52">                indexes.add(records.get(i).get(0));</span>
+<span class="fc" id="L53">                records.get(i).remove(0);</span>
+            }
+            else{
+<span class="fc" id="L56">                indexes.add(&quot;&quot;+i);</span>
+            }
+            /* ========================================== */
+
+            /* Boucle d'ajout des colonnes */
+<span class="fc bfc" id="L61" title="All 2 branches covered.">            for(int j = 0; j &lt; labels.size(); j++){</span>
+                double f;
+<span class="fc" id="L63">                String val = records.get(i).get(j);</span>
+                try {
+<span class="fc" id="L65">                    f = Double.valueOf(val.trim()).floatValue(); /* on vÃ©rifie si on peut caster en double*/</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">                    if(f-Math.round(f)&lt;=0){ /* si la valeur est un entier on l'ajoute en tant qu'entier*/</span>
+<span class="fc" id="L67">                        columns.get(j).add(Math.round(f));</span>
+                    }
+                    else{  /* sinon on l'enregistre en tant que double */
+<span class="fc" id="L70">                        columns.get(j).add(f);</span>
+                    }
+<span class="fc" id="L72">                } catch (NumberFormatException e) { /* si une erreur est dÃ©tectÃ©e, c'est que la valeur est un string */</span>
+<span class="fc" id="L73">                    columns.get(j).add(val);</span>
+<span class="fc" id="L74">                }</span>
+            }
+        }
+<span class="fc" id="L77">    }</span>
+
+    /**
+     * Get labels
+     * @return La liste des labels
+     */
+    public ArrayList&lt;String&gt; getLabels(){
+
+<span class="fc" id="L85">        return labels;</span>
+    }
+
+    /**
+     * Get indexes
+     * @return La liste des indexes
+     */
+    public ArrayList&lt;String&gt; getIndexes(){
+<span class="fc" id="L93">        return indexes;</span>
+    }
+
+    /**
+     * Get columns
+     * @return La liste des colonnes
+     */
+    public ArrayList&lt;Column&gt; getColumns(){
+<span class="fc" id="L101">        return columns;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

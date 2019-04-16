@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="data_structure.DataFrameTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2019-04-16T17:21:23" hostname="DESKTOP-UAFVBFT" time="0.01">
+  <properties/>
+  <testcase name="test_Illegal_Argument_Index_Contructor1" classname="data_structure.DataFrameTest" time="0.0"/>
+  <testcase name="test_NullPointer_Contructor1" classname="data_structure.DataFrameTest" time="0.0"/>
+  <testcase name="equals" classname="data_structure.DataFrameTest" time="0.0"/>
+  <testcase name="testConstructor2" classname="data_structure.DataFrameTest" time="0.001"/>
+  <testcase name="testConstructor3" classname="data_structure.DataFrameTest" time="0.001"/>
+  <testcase name="test_illegal2_Constructor2" classname="data_structure.DataFrameTest" time="0.001"/>
+  <testcase name="test_illegal_Constructor2" classname="data_structure.DataFrameTest" time="0.0"/>
+  <testcase name="testColumns" classname="data_structure.DataFrameTest" time="0.0"/>
+  <testcase name="test_Illegal_Argument_Label_Contructor1" classname="data_structure.DataFrameTest" time="0.0"/>
+  <testcase name="groupByAgregate" classname="data_structure.DataFrameTest" time="0.002"/>
+  <testcase name="testIndexs" classname="data_structure.DataFrameTest" time="0.001"/>
+  <testcase name="testLabels" classname="data_structure.DataFrameTest" time="0.0"/>
+  <testcase name="testContructor1" classname="data_structure.DataFrameTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

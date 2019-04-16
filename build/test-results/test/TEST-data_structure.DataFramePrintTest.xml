@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="data_structure.DataFramePrintTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2019-04-16T17:21:23" hostname="DESKTOP-UAFVBFT" time="0.01">
+  <properties/>
+  <testcase name="test_Print_Head_With_Param_With_Exceed_In_NbLines" classname="data_structure.DataFramePrintTest" time="0.001"/>
+  <testcase name="test_Print_tail_With_Param_With_Exceed_In_NbLines" classname="data_structure.DataFramePrintTest" time="0.001"/>
+  <testcase name="test_Illegal_Argument_Print_Head_With_Param" classname="data_structure.DataFramePrintTest" time="0.0"/>
+  <testcase name="test_Print_Head_With_Param" classname="data_structure.DataFramePrintTest" time="0.001"/>
+  <testcase name="test_Print_All" classname="data_structure.DataFramePrintTest" time="0.001"/>
+  <testcase name="test_Illegal_Argument_Print_Tail_With_Param" classname="data_structure.DataFramePrintTest" time="0.0"/>
+  <testcase name="test_Print_Head" classname="data_structure.DataFramePrintTest" time="0.001"/>
+  <testcase name="test_Print_Tail" classname="data_structure.DataFramePrintTest" time="0.001"/>
+  <testcase name="test_Find_Max_1" classname="data_structure.DataFramePrintTest" time="0.002"/>
+  <testcase name="test_Find_Max_2" classname="data_structure.DataFramePrintTest" time="0.0"/>
+  <testcase name="test_Print_Tail_With_Param" classname="data_structure.DataFramePrintTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
