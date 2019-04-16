@@ -85,10 +85,10 @@ docker run -it th3cracked/devops_project test
   
 ## Dependency injection :
  
- On a utiliser Dagger2 qui permet de respecter le 'Open / Closed principle' et permet aussi d'avoir des tests unitaire plus propre.
- Cette partie est juste pour experimenter et n'est ajouter que à la fin dans un package séparer (la couverture du code dans cette partie n'est pas à 100% puisque Dagger genère des classes qui font l'injection).
+ On a utilisé Dagger2 qui permet de respecter le 'Open / Closed principle' et permet aussi d'avoir des tests unitaire plus propre.
+ Cette partie est juste pour experimenter et n'est ajoutée qu'à la fin dans un package séparé (la couverture du code dans cette partie n'est pas à 100% puisque Dagger genère des classes qui font l'injection).
  
- On a utiliser Dagger sur un constructeur de Column et un autre de  DataFrame sans modifier l'interface => une manière simple de faire l'injection de dépendance et d'annoter les constructeur avec @Inject mais nous avons choisi de experimenter avec l'injection de dépendance comme si on avait pas l'accès au code comme dans le cas d'une bibliothèque ce qui est plus dur a réaliser.
+ On a utilisé Dagger sur un constructeur de Column et un autre de DataFrame sans modifier l'interface => une manière simple de faire l'injection de dépendance et d'annoter les constructeur avec @Inject mais nous avons choisi de experimenter avec l'injection de dépendance comme si on avait pas l'accès au code comme dans le cas d'une bibliothèque, ce qui est plus dur a réaliser.
  
  
  ## Feedback :
@@ -108,6 +108,6 @@ docker run -it th3cracked/devops_project test
   
   **Docker Problèmes :**
    
-  - Le temps de création d'images lors du débuggage des problèmes sur docker est insupportable.
+  - Le temps de création d'images lors du débuggage des problèmes sur docker est insupportable (trop long).
    
-  - Un fichier script shell créer sur windows n'est pas compatible avec linux et ce bug nous à pris énormement du temps à résoudre. 
+  - Un fichier script shell créer sur windows n'est pas compatible avec linux et ce bug nous a pris énormement du temps à résoudre. 
