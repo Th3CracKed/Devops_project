@@ -574,7 +574,6 @@ public class DataFrame{
         for (int i=0;i<columns.size();i++){
             cols.add(new Column(new ArrayList()));
         }
-        System.out.println(correspondance);
         for(Map.Entry<Integer, List<Integer>> entry : correspondance.entrySet()) {
             int key = entry.getKey();
             List<Integer> value = entry.getValue();

@@ -2,7 +2,6 @@ package utils;
 
 import data_structure.DataFrame;
 import org.junit.Test;
-import java.io.IOException;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
